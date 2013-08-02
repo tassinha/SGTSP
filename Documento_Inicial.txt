@@ -1,0 +1,1 @@
+﻿Sistema de Gerenciamento de Troca e Substituição de Professores, para a UTFPR - Campus Campo Mourão.
