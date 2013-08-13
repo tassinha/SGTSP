@@ -1,8 +1,14 @@
-package br.edu.utfpr.sgtsp.hibernate;
+package br.edu.utfpr.cm.sgtsp.hibernate;
 
+import br.edu.utfpr.cm.sgtsp.ldap.TransactionManager;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.mapping.PersistentClass;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 public class HibernateConfiguration {
 
