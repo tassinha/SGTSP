@@ -14,7 +14,7 @@ import br.edu.utfpr.sgtsp.beans.Aula;
 public class AulaDao extends DaoGenerico<Aula>{
 
     public AulaDao() {
-        super();;
+        super();
     }
 
     public AulaDao(Aula aula    ) {
