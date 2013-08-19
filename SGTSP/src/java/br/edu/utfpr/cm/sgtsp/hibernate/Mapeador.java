@@ -1,5 +1,10 @@
 package br.edu.utfpr.cm.sgtsp.hibernate;
 
+import br.edu.utfpr.sgtsp.beans.Aula;
+import br.edu.utfpr.sgtsp.beans.Disciplina;
+import br.edu.utfpr.sgtsp.beans.Horario;
+import br.edu.utfpr.sgtsp.beans.Professor;
+import br.edu.utfpr.sgtsp.beans.Turma;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -29,7 +34,11 @@ public class Mapeador {
 
     public static void mapear() {
         
-      //addClass(Categoria.class);
+      addClass(Aula.class);
+      addClass(Disciplina.class);
+      addClass(Horario.class);
+      addClass(Professor.class);
+      addClass(Turma.class);
       
 
 

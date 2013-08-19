@@ -5,6 +5,7 @@
 package br.edu.utfpr.sgtsp.beans;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,9 +21,15 @@ public class Horario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    private HashMap<DescricaoHorarios,Aula> aulas;
+    private boolean ativo;
     public Long getId() {
         return id;
+    }
+public void addAula(DescricaoHorarios dh,Aula aula){
+    aulas.put(dh, aula);
+}
+    public Horario() {
     }
 
     public void setId(Long id) {
