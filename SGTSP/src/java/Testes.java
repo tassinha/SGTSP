@@ -21,7 +21,7 @@ public class Testes {
         Horario h = new Horario();
         Aula aula = new Aula();
         new AulaDao(aula).persist();
-        h.addAula(1,aula);
+        h.addAula(DescricaoHorarios.SEG_M_1,aula);
         new HorarioDao(h).persist();
     }
 }
