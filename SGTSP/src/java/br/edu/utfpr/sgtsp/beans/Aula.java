@@ -29,6 +29,7 @@ public class Aula implements Serializable {
     private Disciplina disciplina;
     
     
+    
 
     public Long getId() {
         return id;

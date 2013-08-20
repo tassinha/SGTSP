@@ -6,10 +6,18 @@ package br.edu.utfpr.sgtsp.beans;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.MapKey;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
+import org.hibernate.annotations.CollectionOfElements;
 
 /**
  *
@@ -17,19 +25,25 @@ import javax.persistence.Id;
  */
 @Entity
 public class Horario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private HashMap<DescricaoHorarios,Aula> aulas;
+   // @CollectionOfElements(fetch = FetchType.EAGER)  
+    private HashMap<Integer, Aula> aulas;
     private boolean ativo;
+
     public Long getId() {
         return id;
     }
-public void addAula(DescricaoHorarios dh,Aula aula){
-    aulas.put(dh, aula);
-}
+
+    public void addAula(Integer id, Aula aula) {
+        aulas.put(id, aula);
+    }
+
     public Horario() {
+        aulas = new HashMap<Integer, Aula>();
     }
 
     public void setId(Long id) {
@@ -60,5 +74,4 @@ public void addAula(DescricaoHorarios dh,Aula aula){
     public String toString() {
         return "br.edu.utfpr.sgtsp.beans.Horario[ id=" + id + " ]";
     }
-    
 }
