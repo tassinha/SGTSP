@@ -1,52 +1,127 @@
-<%-- 
-    Document   : CadastrarProfessor
-    Created on : 19/08/2013, 20:08:08
-    Author     : Eduardo Albertini
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>    
-        <script type="text/javascript" src="js/bootstrap-fileupload.js"></script>    
-        <script type="text/javascript" src="js/bootstrap-fileupload.min.js"></script>     
-        <link href="css/bootstrap-fileupload.min.css" rel="stylesheet" media="screen">
-        <link href="css/bootstrap-fileupload.css" rel="stylesheet" media="screen">
-        <link href="css/bootstrap.css" rel="stylesheet" media="screen">
-        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <meta charset="utf-8">
+        <title>Bootstrap, from Twitter</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Atualizar Dados do Cadastro</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Le styles -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-fileupload.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+        </style>
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="js/html5shiv.js"></script>
+        <![endif]-->
+
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+        <link rel="shortcut icon" href="ico/favicon.png">
     </head>
+
     <body>
-        <label for="username">Nome</label>
-        <div>
-            <div class="input-prepend">
-                <input id="username" name="username" type="text" class="span5" disabled="disabled" value="TEXTO NÃƒO ALTERÃVEL" />
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="brand" href="#">SGTSP</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">*********</a></li>
+                            <li><a href="#contact">*********</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
             </div>
         </div>
-        <label for="email">Email</label>
-        <div>
-            <div>
-                <input id="email" name="email" type="text" class="span5" disabled="disabled" />
+
+        <div class="container">
+
+            <!-- Main hero unit for a primary marketing message or call to action -->
+            <div class="hero-unit">
+                <label for="username">Nome</label>
+                <div>
+                    <div class="input-prepend">
+                        <input id="username" name="username" type="text" class="span5" disabled="disabled" value="TEXTO NÃO ALTERÁVEL" />
+                    </div>
+                </div>
+                <label for="email">Email</label>
+                <div>
+                    <div>
+                        <input id="email" name="email" type="text" class="span5" disabled="disabled" />
+                    </div>
+                </div>
+                <label>Assinatura</label>
+                <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=nenhuma+imagem" /></div>
+                    <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                    <div>
+                        <span class="btn btn-file"><span class="fileupload-new">Carregar Assinatura</span><span class="fileupload-exists">Alterar</span><input type="file" /></span>
+                        <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>
+                    </div>
+                </div>
+                <label>Horário</label>
+                <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <span class="btn btn-file"><span class="fileupload-new">Carregar Horário</span><span class="fileupload-exists">Alterar</span><input type="file" /></span>
+                    <span class="fileupload-preview"></span>
+                    <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+                </div>
+                <ul class="pager">
+                    <li class="next">
+                        <a href="#" class="btn-info" >Continuar</a>
+                    </li>
+                </ul>
+
             </div>
-        </div>
-        <label>Assinatura</label>
-        <div class="fileupload fileupload-new" data-provides="fileupload">
-            <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;"><img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=sem+imagem" /></div>
-            <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
-            <div>
-                <span class="btn btn-file"><span class="fileupload-new">Carregar Assinatura</span><span class="fileupload-exists">Alterar</span><input type="file" /></span>
-                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remover</a>
-            </div>
-        </div>
-        <label>HorÃ¡rio</label>
-        <div class="fileupload fileupload-new" data-provides="fileupload">
-            <span class="btn btn-file"><span class="fileupload-new">Carregar HorÃ¡rio</span><span class="fileupload-exists">Alterar</span><input type="file" /></span>
-            <span class="fileupload-preview"></span>
-            <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">Ã—</a>
-        </div>
+
+            <!-- Example row of columns -->
+
+
+            <hr>
+
+            <footer>
+                <p>&copy; Company 2013</p>
+            </footer>
+
+        </div> <!-- /container -->
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap-transition.js"></script>
+        <script src="js/bootstrap-alert.js"></script>
+        <script src="js/bootstrap-modal.js"></script>
+        <script src="js/bootstrap-dropdown.js"></script>
+        <script src="js/bootstrap-scrollspy.js"></script>
+        <script src="js/bootstrap-tab.js"></script>
+        <script src="js/bootstrap-tooltip.js"></script>
+        <script src="js/bootstrap-popover.js"></script>
+        <script src="js/bootstrap-button.js"></script>
+        <script src="js/bootstrap-collapse.js"></script>
+        <script src="js/bootstrap-carousel.js"></script>
+        <script src="js/bootstrap-typeahead.js"></script>
+        <script src="js/bootstrap-fileupload.js"></script>    
 
     </body>
 </html>
+
+
