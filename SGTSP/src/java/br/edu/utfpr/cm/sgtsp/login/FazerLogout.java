@@ -70,3 +70,4 @@ public class FazerLogout extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 }
+
