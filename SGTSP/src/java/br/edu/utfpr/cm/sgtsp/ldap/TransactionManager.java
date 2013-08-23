@@ -1,6 +1,6 @@
 package br.edu.utfpr.cm.sgtsp.ldap;
 
-import br.edu.utfpr.cm.sgtsp.hibernate.HibernateConfiguration;
+import br.edu.utfpr.cm.sgtsp.hibernate.Mapeador;
 import org.hibernate.FlushMode;
 
 import org.hibernate.Session;
@@ -15,7 +15,7 @@ public class TransactionManager {
         if(transaction != null){
             throw new RuntimeException("Já existe uma transação iniciada.");
         }
-        session = HibernateConfiguration.openConnect();
+        session = Mapeador.getSessao();
         transaction = session.beginTransaction();        
     }
     
@@ -40,7 +40,7 @@ public class TransactionManager {
     public static Session getCurrentSession(){
         /*Automatizando a criação da transação.*/
         if(session == null){
-            Session session2 = HibernateConfiguration.openConnect();           
+            Session session2 = Mapeador.getSessao();           
            // System.out.println("========================="+session2.getFlushMode());
             session2.setFlushMode(FlushMode.ALWAYS);            
             return session2; 
