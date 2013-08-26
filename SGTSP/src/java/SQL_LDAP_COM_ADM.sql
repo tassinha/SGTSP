@@ -45,7 +45,8 @@ CREATE TABLE `Papel` (
 /*!40000 ALTER TABLE `Papel` DISABLE KEYS */;
 INSERT INTO `Papel` (`id`,`descricao`,`nome`,`Sistema_id`) VALUES 
  (1,'Coordenador','Coordenador',2),
- (2,'Professor','Professor',2);
+ (2,'Professor','Professor',2),
+ (3,'Administrador','Administrador',2);
 /*!40000 ALTER TABLE `Papel` ENABLE KEYS */;
 
 
@@ -68,8 +69,10 @@ CREATE TABLE `PapelDoUsuario` (
 --
 
 INSERT INTO `PapelDoUsuario` (`Papel_id`,`Usuario_id`) VALUES 
- (1,1),
- (2,2);
+ (2,1),
+ (3,1),
+ (4,2),
+ (5,3);
 /*!40000 ALTER TABLE `PapelDoUsuario` DISABLE KEYS */;
 /*!40000 ALTER TABLE `PapelDoUsuario` ENABLE KEYS */;
 
@@ -123,7 +126,7 @@ INSERT INTO `Usuario` (`DTYPE`,`id`,`email`,`login`,`nome`,`senha`,`papel_id`) V
 ('Professor',2,'testerson@teste.com','testerson','Testerson Teste','teste123',2),
 ('Professor',3,'testelvina@teste.com','testelvina','Testelvina Teste','teste345',2),
 ('Coordenador',4,'testelvaldo@teste.com','testelvaldo','Testelvaldo Teste','teste234',1),
-('Coordenador',5,'admin@admin.com','admin','Administrador do Sistema','admin123',1);
+('Administrador',5,'admin@admin.com','admin','Administrador do Sistema','admin123',3);
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 
 
