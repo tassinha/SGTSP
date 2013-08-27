@@ -17,7 +17,7 @@ public class AulaDao extends DaoGenerico<Aula>{
         super();
     }
 
-    public AulaDao(Aula aula    ) {
+    public AulaDao(Aula aula) {
         super(aula);
     }
     
