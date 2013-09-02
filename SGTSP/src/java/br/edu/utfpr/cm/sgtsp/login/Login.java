@@ -47,7 +47,7 @@ public class Login extends HttpServlet {
 
             if (usuarioLocal != null) {
                 request.getSession().setAttribute("UsuarioLogado", usuarioLocal);
-                response.sendRedirect("CadastroProfessor.jsp");
+                response.sendRedirect("CadastrarProfessor.jsp");
             } else {
                 //Usar em casa//                
                 if (!uLogin.equals("admin")) {
