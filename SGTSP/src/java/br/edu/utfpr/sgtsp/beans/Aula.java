@@ -7,29 +7,28 @@ package br.edu.utfpr.sgtsp.beans;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
  *
- * @author josimar
+ * @author Ge
  */
 @Entity
 public class Aula implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
+    
     @ManyToOne
     private Professor professor;
+    
     @ManyToOne
     private Turma turma;
+    
     @ManyToOne
-    private Disciplina disciplina;
-    
-    
-    
+    private Disciplina diciplina;
 
     public Long getId() {
         return id;
@@ -55,38 +54,14 @@ public class Aula implements Serializable {
         this.turma = turma;
     }
 
-    public Disciplina getDisciplina() {
-        return disciplina;
+    public Disciplina getDiciplina() {
+        return diciplina;
     }
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
+    public void setDiciplina(Disciplina diciplina) {
+        this.diciplina = diciplina;
     }
     
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Aula)) {
-            return false;
-        }
-        Aula other = (Aula) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "br.edu.utfpr.sgtsp.beans.Aula[ id=" + id + " ]";
-    }
+    
     
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ClassesEntidade;
+package br.edu.utfpr.sgtsp.beans;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +22,7 @@ public class Coordenacao implements Serializable {
     @OneToMany(mappedBy = "coordenacao")
     private List<Turma> turmas;
     @OneToMany(mappedBy = "coordenacao")
-    private List<Diciplina> diciplinas;
+    private List<Disciplina> diciplinas;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,11 +47,11 @@ public class Coordenacao implements Serializable {
         this.descricao = descricao;
     }
 
-    public List<Diciplina> getDiciplinas() {
+    public List<Disciplina> getDiciplinas() {
         return diciplinas;
     }
 
-    public void setDiciplinas(List<Diciplina> diciplinas) {
+    public void setDiciplinas(List<Disciplina> diciplinas) {
         this.diciplinas = diciplinas;
     }
 

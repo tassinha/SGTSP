@@ -6,19 +6,11 @@ package br.edu.utfpr.sgtsp.beans;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.MapKey;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.OneToMany;
-import org.hibernate.annotations.CollectionOfElements;
 
 /**
  *
