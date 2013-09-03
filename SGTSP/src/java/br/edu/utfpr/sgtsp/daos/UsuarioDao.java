@@ -16,6 +16,7 @@ public class UsuarioDao extends DaoGenerico<Usuario> {
     public Usuario obterPorLogin(String login) {
         Usuario usuario = null;
         if (login != null) {
+            System.out.println(Usuario.class.getSimpleName());
             Query select = this.getSessao().createQuery("FROM " + Usuario.class.getSimpleName() + " WHERE login = '" + login + "'");
             usuario = (Usuario) select.uniqueResult();
         }

@@ -146,40 +146,40 @@ public class Login extends HttpServlet {
     }
 
     private Usuario garantirQueUsuarioEstaNaBaseDoGerenciador(Usuario user, PrintWriter out, HttpServletRequest request) {
-//
-//        request.getSession().removeAttribute("UsuarioLogado");
-//
-//        if (!verificarSegundoDigito(user.getLogin().charAt(1))) {
-//            
-//            System.out.println("Entrei aqui!********* DaoProfessor");
-//            ProfessorDao pDao = new ProfessorDao();
-//            Professor professor = pDao.obterPorLogin(user.getLogin());
-//
-//            if (professor != null) {
-//                if (professor.getPapel() == null) {
-//                    professor.setPapel(new PapelDao().get(2));
-//                    pDao.persist();
-//                    request.getSession().setAttribute("UsuarioLogado", professor);
-//                    return professor;
-//                } else {
-//                    request.getSession().setAttribute("UsuarioLogado", professor);
-//                    return professor;
-//                }
-//            } else {
-//                TransactionManager.beginTransaction();
-//                professor = new Professor();
-//                professor.setNome(user.getNome());
-//                professor.setLogin(user.getLogin());
-//                professor.setEmail(user.getEmail());
-//                professor.setPapel(new PapelDao().get(2));
-//                pDao.persist();
-//                TransactionManager.commit();
-//                request.getSession().setAttribute("UsuarioLogado", professor);
-//                return professor;
-//            }
-//        } else {
+
+        request.getSession().removeAttribute("UsuarioLogado");
+
+        if (!verificarSegundoDigito(user.getLogin().charAt(1))) {
+            
+            System.out.println("Entrei aqui!********* DaoProfessor");
+            ProfessorDao pDao = new ProfessorDao();
+            Professor professor = pDao.obterPorLogin(user.getLogin());
+
+            if (professor != null) {
+                if (professor.getPapel() == null) {
+                    professor.setPapel(new PapelDao().get(2));
+                    pDao.persist();
+                    request.getSession().setAttribute("UsuarioLogado", professor);
+                    return user;
+                } else {
+                    request.getSession().setAttribute("UsuarioLogado", professor);
+                    return user;
+                }
+            } else {
+                TransactionManager.beginTransaction();
+                professor = new Professor();
+                professor.setNome(user.getNome());
+                professor.setLogin(user.getLogin());
+                professor.setEmail(user.getEmail());
+                professor.setPapel(new PapelDao().get(2));
+                pDao.persist();
+                TransactionManager.commit();
+                request.getSession().setAttribute("UsuarioLogado", professor);
+                return user;
+            }
+        } else {
             return null;            
-//        }
+        }
     }
 
     private boolean verificarSegundoDigito(char digito2) {
@@ -229,18 +229,18 @@ public class Login extends HttpServlet {
         }
     }
 
-//    private String qualOPapel(Usuario user) {
-//        System.out.println(user.toString());
-//        if (user.getPapelList().get(0).equals(new DaoPapel().obterPorId(1))) {
-//            return "Bibliotecario";
-//        } else if (user.getPapelList().get(0).equals(new DaoPapel().obterPorId(2))) {
-//            return "Coordenador";
-//        } else if (user.getPapelList().get(0).equals(new DaoPapel().obterPorId(3))) {
-//            return "Professor";
-//        } else {
-//            return null;
-//        }
-//    }
+    private String qualOPapel(Usuario user) {
+        System.out.println(user.toString());
+        if (user.getPapelList().get(0).equals(new PapelDao().get(1))) {
+            return "Coordenador";
+        } else if (user.getPapelList().get(0).equals(new PapelDao().get(2))) {
+            return "Professor";
+        } else if (user.getPapelList().get(0).equals(new PapelDao().get(3))) {
+            return "Administrador";
+        } else {
+            return null;
+        }
+    }
     
 }
 

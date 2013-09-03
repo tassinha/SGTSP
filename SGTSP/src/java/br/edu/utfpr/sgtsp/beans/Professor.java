@@ -4,6 +4,7 @@
  */
 package br.edu.utfpr.sgtsp.beans;
 
+import br.edu.utfpr.cm.saa.entidades.Papel;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -30,6 +32,9 @@ public class Professor implements Serializable {
     
     @ManyToOne
     private Coordenacao coordenacao;
+    
+    @OneToOne
+    private Papel papel;
 
     public String getCpf() {
         return cpf;
@@ -62,7 +67,17 @@ public class Professor implements Serializable {
     public void setCoordenacao(Coordenacao coordenacao) {
         this.coordenacao = coordenacao;
     }
-    
-    
+
+    public Papel getPapel() {
+        return papel;
+    }
+
+    public void setPapel(Papel papel) {
+        this.papel = papel;
+    }
+
+    public void setLogin(String login) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
     
 }
