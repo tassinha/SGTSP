@@ -1,10 +1,12 @@
 
+import br.edu.utfpr.cm.saa.entidades.Usuario;
 import br.edu.utfpr.cm.sgtsp.hibernate.Mapeador;
 import br.edu.utfpr.sgtsp.beans.Aula;
 import br.edu.utfpr.sgtsp.beans.DescricaoHorarios;
 import br.edu.utfpr.sgtsp.beans.Horario;
 import br.edu.utfpr.sgtsp.daos.AulaDao;
 import br.edu.utfpr.sgtsp.daos.HorarioDao;
+import br.edu.utfpr.sgtsp.daos.UsuarioDao;
 
 /*
  * To change this template, choose Tools | Templates
@@ -23,5 +25,13 @@ public class Testes {
         new AulaDao(aula).persist();
         h.addAula(DescricaoHorarios.SEG_M_1,aula);
         new HorarioDao(h).persist();
+        
+        Usuario user = new Usuario();
+        user.setLogin("admin");
+        user.setNome("Administrador");
+        user.setEmail("admin@admin.com");
+        user.setSenha("admin123");
+        
+        new UsuarioDao(user).persist();
     }
 }

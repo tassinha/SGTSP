@@ -47,6 +47,7 @@ public class Login extends HttpServlet {
 
             if (usuarioLocal != null) {
                 request.getSession().setAttribute("UsuarioLogado", usuarioLocal);
+                System.out.println("Passando aqui ************************");
                 response.sendRedirect("CadastrarProfessor.jsp");
             } else {
                 //Usar em casa//                
@@ -62,14 +63,17 @@ public class Login extends HttpServlet {
                         if (userInterno != null) {
                         } else {
                             request.getSession().setAttribute("erroLogin", "Login ou Senha incorretos");
+                            System.out.println("Passando aqui ---------------");
                             response.sendRedirect("Login.jsp");
                         }
                     } else {
                         request.getSession().setAttribute("erroLogin", "Login ou Senha incorretos");
+                        System.out.println("Passando aqui ++++++++++++++++++++++++++");
                         response.sendRedirect("Login.jsp");
                     }
                 } else {
                     request.getSession().setAttribute("erroLogin", "Login ou Senha incorretos");
+                    System.out.println("Passando aqui #################################");
                     response.sendRedirect("Login.jsp");
                 }
             }
@@ -219,6 +223,8 @@ public class Login extends HttpServlet {
             UsuarioDao dao = new UsuarioDao();
             System.out.println(" Passandooooooooo*********************************");
             Usuario usuario = dao.obterPorLogin(uLogin);
+            System.out.println("");
+            System.out.println("Senha " + uSenha);
             if (uSenha.equals("admin123")) {
                 return usuario;
             } else {

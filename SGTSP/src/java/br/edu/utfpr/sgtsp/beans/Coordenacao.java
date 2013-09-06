@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Coordenacao implements Serializable {
     @OneToMany(mappedBy = "coordenacao")
-    private List<Professor> professors;
+    private List<Professor> professores;
     @OneToMany(mappedBy = "coordenacao")
     private List<Turma> turmas;
     @OneToMany(mappedBy = "coordenacao")
@@ -55,12 +55,12 @@ public class Coordenacao implements Serializable {
         this.diciplinas = diciplinas;
     }
 
-    public List<Professor> getProfessors() {
-        return professors;
+    public List<Professor> getProfessores() {
+        return professores;
     }
 
-    public void setProfessors(List<Professor> professors) {
-        this.professors = professors;
+    public void setProfessores(List<Professor> professores) {
+        this.professores = professores;
     }
 
     public List<Turma> getTurmas() {
