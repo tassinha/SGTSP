@@ -16,15 +16,10 @@ import org.jsoup.nodes.Element;
  */
 public class ParseHtmlHorario {
 
-    File file;
-
-    public ParseHtmlHorario(String html) {
+    public String Parse(String html) throws IOException {
         File file = new File(html);
-    }
-
-    public String Parse() throws IOException {
         String horarioSemanal = "";
-        Document doc = Jsoup.parse(this.file, "ISO-8859-1");
+        Document doc = Jsoup.parse(file, "ISO-8859-1");
 
         horarioSemanal = selectTurno("m", doc);
         horarioSemanal += selectTurno("t", doc);
@@ -41,11 +36,10 @@ public class ParseHtmlHorario {
                 String tagId = "dv_" + diaSemana + turno + aula;
                 Element element = doc.getElementById(tagId);
                 if (element != null) {
-                    horario =element.text();
+                    horario += tagId + element.text() + "\n";
                 }
             }
         }
         return horario;
     }
-    
 }
