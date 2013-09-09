@@ -100,6 +100,18 @@ public class ProcessaHorario extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
 
+            response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+       
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProcessaHorario</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Conteudo do MAP </h1>");
+           
+       
         String pasta = getServletContext().getContextPath();
         File f = new File(pasta);
         if (f.isDirectory()) {
@@ -137,18 +149,21 @@ public class ProcessaHorario extends HttpServlet {
                         } else {
                             item.write(arquivo);
                         }
-                        System.out.println(arquivo.getCanonicalPath());
-                        ParseHtmlHorario parse = new ParseHtmlHorario();
-                        Map m = parse.Parse(arquivo);
+                    
+                      
+                        Map m = new ParseHtmlHorario().Parse(arquivo);
                         Set<String> keySet = m.keySet();
                         print(request, response, "teste "+keySet.size());
                        for(String key :keySet ){
                             String s = (String) m.get(key);
-                             System.out.println("Chave - > "+key+" valor: "+s);
+                            if(s.length()>3)
+                             out.println("<p>Chave - > "+key+" valor: "+s+"</p>");
                        }
                     } else {
                     }
                 }
+                 out.println("</body>");
+            out.println("</html>");
 
             } catch (FileNotFoundException e) {
                 System.out.println(e);
