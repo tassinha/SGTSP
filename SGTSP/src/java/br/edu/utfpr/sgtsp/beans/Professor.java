@@ -20,19 +20,21 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Professor implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column
     private String cpf;
-    
     @Column
     private String nome;
-    
     @Column
     private String email;
-    
+    @Column
+    private String login;
     @ManyToOne
     private Coordenacao coordenacao;
-    
     @OneToOne
     private Papel papel;
 
@@ -42,6 +44,10 @@ public class Professor implements Serializable {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getLogin() {
+        return login;
     }
 
     public String getNome() {
@@ -77,7 +83,14 @@ public class Professor implements Serializable {
     }
 
     public void setLogin(String login) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        this.login = login;
     }
-    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

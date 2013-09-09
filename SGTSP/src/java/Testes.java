@@ -4,8 +4,10 @@ import br.edu.utfpr.cm.sgtsp.hibernate.Mapeador;
 import br.edu.utfpr.sgtsp.beans.Aula;
 import br.edu.utfpr.sgtsp.beans.DescricaoHorarios;
 import br.edu.utfpr.sgtsp.beans.Horario;
+import br.edu.utfpr.sgtsp.beans.Professor;
 import br.edu.utfpr.sgtsp.daos.AulaDao;
 import br.edu.utfpr.sgtsp.daos.HorarioDao;
+import br.edu.utfpr.sgtsp.daos.ProfessorDao;
 import br.edu.utfpr.sgtsp.daos.UsuarioDao;
 
 /*
@@ -33,5 +35,11 @@ public class Testes {
         user.setSenha("admin123");
         
         new UsuarioDao(user).persist();
+        Professor p = new Professor();
+        p.setLogin("Kassia");
+        new ProfessorDao(p).persist();
+        Professor pr = new ProfessorDao().obterPorLogin("Kassia");
+        System.out.println(pr.getLogin());
+        
     }
 }

@@ -19,7 +19,9 @@ public abstract class DaoGenerico<T> {
      Session sessao;
      Criteria criteria;
      Class objectClass;
-
+     public Criteria getCriteria(){
+         return this.criteria;
+     }
     public Session getSessao() {
         return sessao;
     }
