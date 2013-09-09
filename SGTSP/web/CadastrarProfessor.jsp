@@ -60,13 +60,13 @@
                 <label for="username">Nome</label>
                 <div>
                     <div class="input-prepend">
-                        <input id="username" name="username" type="text" class="span5" disabled="disabled" value="TEXTO NÃO ALTERÁVEL" />
+                        <input id="username" name="username" type="text" class="span5" disabled="disabled" value="${UsuarioLogado.nome}" />
                     </div>
                 </div>
                 <label for="email">Email</label>
                 <div>
                     <div>
-                        <input id="email" name="email" type="text" class="span5" disabled="disabled" />
+                        <input id="email" name="email" type="text" class="span5" disabled="disabled" value="${UsuarioLogado.email}" />
                     </div>
                 </div>
                 <label>Assinatura</label>
@@ -86,7 +86,7 @@
                 </div>
                 <ul class="pager">
                     <li class="next">
-                        <a href="#" class="btn-info" >Continuar</a>
+                        <a href="index.jsp" class="btn-info" >Continuar</a>
                     </li>
                 </ul>
 
@@ -106,7 +106,7 @@
         <!-- Le javascript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="js/jquery.js"></script>
+        <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap-transition.js"></script>
         <script src="js/bootstrap-alert.js"></script>
         <script src="js/bootstrap-modal.js"></script>
