@@ -1,10 +1,18 @@
+<%-- 
+    Document   : upload_arq_html
+    Created on : 09/09/2013, 10:03:59
+    Author     : josimar
+--%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Bootstrap, from Twitter</title>
+        <title>SGTSP - Upload</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -37,16 +45,6 @@
 
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
-                 <p class="navbar-text pull-right">
-                        <c:if test="${UsuarioLogado!=null}">
-                            Logado Como: <a href="#" class="navbar-link"></a>  
-
-                            <strong style="color: #FFFBEF"> <c:out value="${UsuarioLogado.nome}"/> </strong> - 
-                            <a href="FazerLogout" title="Sair" > Sair</a> 
-                        </c:if>
-
-
-                    </p>    
                 <div class="container">
                     <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                         <span class="icon-bar"></span>
@@ -56,9 +54,9 @@
                     <a class="brand" href="#">SGTSP</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="CadastrarProfessor.jsp">Cadastrar Professor</a></li>
-                            <li><a href="upload_arq_html.jsp">Upload Aquivo HTML</a></li>
+                            <li><a href="index.jsp">Home</a></li>
+                           <li><a href="CadastrarProfessor.jsp">Cadastrar Professor</a></li>
+                            <li class="active" ><a href="upload_arq_html.jsp">Upload Aquivo HTML</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -66,7 +64,28 @@
         </div>
 
         <div class="container">
+            <form class="form-horizontal"  action="ProcessaHorario" method="post" ENCTYPE="multipart/form-data" accept-charset="UTF-8" onsubmit="enviando()">
+           
+            <h3 class="content-section">Upoad Arquivo Horário</h3>
+  
+          
+            <div class="control-group">
+                <label class="control-label" for="arquivo" >Arquivo</label>
+                <div class="controls">
+                    <input type="file" id="arquivo" name="arquivo"  >
+                </div>
+            </div>
 
+        
+           
+          
+            <div class="control-group">
+                <div class="controls">
+                    <input type="hidden" name="action" value="cadastra_subcategoria"/>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </form>
            
             <footer>
                 <p>&copy; Company 2013</p>
@@ -94,5 +113,6 @@
 
     </body>
 </html>
+
 
 

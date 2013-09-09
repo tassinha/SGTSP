@@ -44,9 +44,9 @@
                     <a class="brand" href="#">SGTSP</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">*********</a></li>
-                            <li><a href="#contact">*********</a></li>
+                             <li><a href="index.jsp">Home</a></li>
+                           <li class="active" ><a href="CadastrarProfessor.jsp">Cadastrar Professor</a></li>
+                            <li><a href="upload_arq_html.jsp">Upload Aquivo HTML</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>

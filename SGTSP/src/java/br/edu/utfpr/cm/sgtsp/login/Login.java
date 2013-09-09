@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
@@ -48,7 +49,8 @@ public class Login extends HttpServlet {
             if (usuarioLocal != null) {
                 request.getSession().setAttribute("UsuarioLogado", usuarioLocal);
                 System.out.println("Passando aqui ************************");
-                response.sendRedirect("CadastrarProfessor.jsp");
+                response.sendRedirect("index.jsp");
+              
             } else {
                 //Usar em casa//                
                 if (!uLogin.equals("admin")) {

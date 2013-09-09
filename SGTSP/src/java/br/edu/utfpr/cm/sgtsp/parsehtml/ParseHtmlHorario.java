@@ -29,6 +29,17 @@ public class ParseHtmlHorario {
 
         return horarioSemanal;
     }
+    public Map Parse(File arquivo) throws IOException {
+       
+        Map horarioSemanal = new HashMap<String, String>();
+        Document doc = Jsoup.parse(arquivo, "UTF-8");
+
+        horarioSemanal.putAll(selectTurno("m", doc));
+        horarioSemanal.putAll(selectTurno("t", doc));
+        horarioSemanal.putAll(selectTurno("n", doc));
+
+        return horarioSemanal;
+    }
 
     private Map selectTurno(String turno, Document doc) {
         int diaSemana, aula;
