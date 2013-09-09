@@ -118,7 +118,8 @@ public class ProcessaHorario extends HttpServlet {
         out.println("<h1>Conteudo do MAP </h1>");
 
 
-        String pasta = getServletContext().getContextPath();
+       // String pasta = getServletContext().getContextPath();
+        String pasta ="d:/arquivos";
         File f = new File(pasta);
         if (f.isDirectory()) {
         } else {
