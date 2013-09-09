@@ -6,6 +6,7 @@ package br.edu.utfpr.sgtsp.daos;
 
 import br.edu.utfpr.cm.sgtsp.hibernate.DaoGenerico;
 import br.edu.utfpr.sgtsp.beans.Turma;
+import org.hibernate.Criteria;
 
 /**
  *
@@ -20,4 +21,9 @@ public class TurmaDao extends DaoGenerico<Turma> {
     public TurmaDao(Turma turma) {
         super(turma);
     }
+    
+    public boolean exist(String descricao){
+        return getCampoTabelaIgualParametro("descricao", descricao).isEmpty();
+    }
+    
 }

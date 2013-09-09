@@ -5,10 +5,14 @@
 package br.edu.utfpr.cm.sgtsp.Servlets;
 
 import br.edu.utfpr.cm.sgtsp.parsehtml.ParseHtmlHorario;
+import br.edu.utfpr.sgtsp.beans.Coordenacao;
+import br.edu.utfpr.sgtsp.beans.Turma;
+import br.edu.utfpr.sgtsp.daos.TurmaDao;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -59,15 +63,16 @@ public class ProcessaHorario extends HttpServlet {
             out.close();
         }
     }
+
     protected void print(HttpServletRequest request, HttpServletResponse response, String s)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-      
-            /* TODO output your page here. You may use following sample code. */
-          
-            out.println("<h3>Servlet ProcessaHorario at " + s + "</h3>");
-         
+
+        /* TODO output your page here. You may use following sample code. */
+
+        out.println("<h3>Servlet ProcessaHorario at " + s + "</h3>");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -100,18 +105,19 @@ public class ProcessaHorario extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
 
-            response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-       
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProcessaHorario</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Conteudo do MAP </h1>");
-           
-       
+              
+
+        /* TODO output your page here. You may use following sample code. */
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Servlet ProcessaHorario</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>Conteudo do MAP </h1>");
+
+
         String pasta = getServletContext().getContextPath();
         File f = new File(pasta);
         if (f.isDirectory()) {
@@ -126,7 +132,7 @@ public class ProcessaHorario extends HttpServlet {
         }
 
         File arquivo = null;
-     
+
 
         if (FileUpload.isMultipartContent(request)) {
             DiskFileUpload upload = new DiskFileUpload();
@@ -149,21 +155,60 @@ public class ProcessaHorario extends HttpServlet {
                         } else {
                             item.write(arquivo);
                         }
-                    
-                      
+
+
                         Map m = new ParseHtmlHorario().Parse(arquivo);
                         Set<String> keySet = m.keySet();
-                        print(request, response, "teste "+keySet.size());
-                       for(String key :keySet ){
+                        print(request, response, "teste " + keySet.size());
+                        for (String key : keySet) {
                             String s = (String) m.get(key);
-                            if(s.length()>3)
-                             out.println("<p>Chave - > "+key+" valor: "+s+"</p>");
-                       }
+
+                            //------ teste JP -----\\
+
+                            if (s.length() > 3) {
+                                
+                                s.trim();
+                                String[] vetor = s.split(" ");
+                                String turma = vetor[3];
+                                String disciplina = vetor[2];
+                                
+                                
+                                out.println("<p> Disciplionas: " + disciplina + "</p>");
+                                
+                                if(vetor[3].length() == 4)
+                                out.println("<p> Turma: " + turma+ "</p>");
+                                
+                              Coordenacao cordenacao = new Coordenacao();
+                              cordenacao.setDescricao("Coint");
+                              
+                              Turma t = new Turma();
+                              t.setCoordenacao(null);
+                              t.setDescricao(turma);
+                              
+                              new TurmaDao(t).persist();
+                              
+//                              if(!new TurmaDao().exist(t.getDescricao())){
+//                                out.println("<p> entrouuuuuuuuuuuu </p>");
+//                              }else {
+//                                out.println("<p>Não  entrouuuuuuuuuuuu </p>");
+//                              
+//                              }
+                              
+                              
+                              
+                            //------ fim do teste JP ----\\
+
+                                
+                                
+//                            if (s.length() > 3) {
+//                                out.println("<p>Chave - > " + key + " valor: " + s + "</p>");
+                            }
+                        }
                     } else {
                     }
                 }
-                 out.println("</body>");
-            out.println("</html>");
+                out.println("</body>");
+                out.println("</html>");
 
             } catch (FileNotFoundException e) {
                 System.out.println(e);
