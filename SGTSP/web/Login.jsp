@@ -15,7 +15,7 @@
     </head>
     <body>
         <div id="box">
-            <form action="Login" method="POST" class="form-horizontal" accept-charset="ISO-8859-1">
+            <form action="LoginManager" method="POST" class="form-horizontal" accept-charset="ISO-8859-1">
                 <fieldset >
                     <h5 class="row">${erroLogin}</h5>
                     <label for="username">Usuário</label>
@@ -33,6 +33,7 @@
                             <span class="add-on">
                                 <i class="icon-lock"></i>
                             </span>
+                            <input type="hidden" name="ok" value="login"/>
                             <input id="password" name="password" type="password" class="span3">
                             <div class="controls">
                                 <br /> 

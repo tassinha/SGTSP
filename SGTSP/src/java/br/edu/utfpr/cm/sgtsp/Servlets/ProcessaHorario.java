@@ -165,7 +165,7 @@ public class ProcessaHorario extends HttpServlet {
                             String s = (String) m.get(key);
 
                             //------ teste JP -----\\
-
+/*
                             if (s.length() > 3) {
                                 
                                 s.trim();
@@ -199,19 +199,18 @@ public class ProcessaHorario extends HttpServlet {
                               
                             //------ fim do teste JP ----\\
 
+                            */    
                                 
-                                
-//                            if (s.length() > 3) {
-//                                out.println("<p>Chave - > " + key + " valor: " + s + "</p>");
+                            if (s.length() > 3) {
+                                out.println("<p>Chave - > " + key + " valor: " + s + "</p>");
                             }
-                        }
-                    } else {
-                    }
+                        
+                    } 
                 }
                 out.println("</body>");
                 out.println("</html>");
 
-            } catch (FileNotFoundException e) {
+            }} catch (FileNotFoundException e) {
                 System.out.println(e);
             } catch (FileUploadException e) {
                 System.out.println(e);

@@ -16,6 +16,14 @@
         <servlet-name>ProcessaHorario</servlet-name>
         <url-pattern>/ProcessaHorario</url-pattern>
     </servlet-mapping>
+      <servlet>
+        <servlet-name>LoginManager</servlet-name>
+        <servlet-class>br.edu.utfpr.cm.sgtsp.login.LoginManager</servlet-class>
+    </servlet>
+      <servlet-mapping>
+        <servlet-name>LoginManager</servlet-name>
+        <url-pattern>/LoginManager</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

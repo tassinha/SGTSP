@@ -224,9 +224,9 @@ public class Login extends HttpServlet {
         if (uLogin.isEmpty() || uLogin.equals("")) {
             return null;
         } else {
-            TransactionManager.beginTransaction();
-            UsuarioDao dao = new UsuarioDao();
-            Usuario usuario = dao.obterPorLogin(uLogin);
+          //  TransactionManager.beginTransaction();
+         
+            Usuario usuario = new UsuarioDao().obterPorLogin(uLogin);
             System.out.println("AQUI *************************************");
             System.out.println(usuario);
             return usuario;
