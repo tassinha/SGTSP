@@ -173,6 +173,8 @@ public class ProcessaHorario extends HttpServlet {
                                 String turma = vetor[0];
                                 String disciplina = vetor[0];
                                 
+                                
+                                
                                 int indice = disciplina.lastIndexOf(" ");
                                 String codigodiciplina = disciplina.substring(0, indice);
                                 String descricao = disciplina.substring(indice, disciplina.length());
