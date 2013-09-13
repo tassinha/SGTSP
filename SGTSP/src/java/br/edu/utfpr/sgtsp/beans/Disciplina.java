@@ -23,15 +23,26 @@ public class Disciplina implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String codigo;
-    
-    @Column
     private String nome;
-    
-  
     @ManyToOne
     private Coordenacao coordenacao;
-    
-    
+
+    public Disciplina(String codigo, String nome, Coordenacao coordenacao) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.coordenacao = coordenacao;
+    }
+
+    public Disciplina() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCodigo() {
         return codigo;

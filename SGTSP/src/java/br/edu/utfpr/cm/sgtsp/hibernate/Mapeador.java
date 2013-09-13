@@ -3,6 +3,7 @@ package br.edu.utfpr.cm.sgtsp.hibernate;
 import br.edu.utfpr.cm.saa.entidades.Papel;
 import br.edu.utfpr.cm.saa.entidades.Sistema;
 import br.edu.utfpr.cm.saa.entidades.Usuario;
+import br.edu.utfpr.sgtsp.beans.Administrador;
 import br.edu.utfpr.sgtsp.beans.Aula;
 import br.edu.utfpr.sgtsp.beans.Coordenacao;
 import br.edu.utfpr.sgtsp.beans.Disciplina;
@@ -43,10 +44,10 @@ public class Mapeador {
       addClass(Horario.class);
       addClass(Professor.class);
       addClass(Turma.class);
-      addClass(Papel.class);
+      addClass(Administrador.class);
       addClass(Coordenacao.class);
-      addClass(Sistema.class);
-      addClass(Usuario.class);
+     // addClass(Sistema.class);
+     // addClass(Usuario.class);
       
 
 

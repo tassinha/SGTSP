@@ -25,7 +25,6 @@ public class Horario implements Serializable {
     private Long id;
    @Column(columnDefinition = "LONGBLOB")  
     private HashMap<DescricaoHorarios, Aula> aulas;
-    private boolean ativo;
 
     public Long getId() {
         return id;
@@ -43,6 +42,15 @@ public class Horario implements Serializable {
         this.id = id;
     }
 
+    public HashMap<DescricaoHorarios, Aula> getAulas() {
+        return aulas;
+    }
+
+    public void setAulas(HashMap<DescricaoHorarios, Aula> aulas) {
+        this.aulas = aulas;
+    }
+
+   
     @Override
     public int hashCode() {
         int hash = 0;

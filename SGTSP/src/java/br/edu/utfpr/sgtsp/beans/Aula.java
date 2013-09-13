@@ -20,16 +20,12 @@ public class Aula implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    
     @ManyToOne
     private Professor professor;
-    
     @ManyToOne
     private Turma turma;
-    
     @ManyToOne
     private Disciplina diciplina;
-
     public Long getId() {
         return id;
     }

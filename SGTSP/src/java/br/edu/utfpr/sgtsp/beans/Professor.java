@@ -25,26 +25,16 @@ public class Professor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column
-    private String cpf;
-    @Column
     private String nome;
-    @Column
     private String email;
-    @Column
     private String login;
     @ManyToOne
     private Coordenacao coordenacao;
-    @OneToOne
-    private Papel papel;
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+    private boolean isCoordenador;
+    @Column(columnDefinition="LONGBLOB")
+    private byte[] assinatura;
+   
+    
 
     public String getLogin() {
         return login;
@@ -74,13 +64,23 @@ public class Professor implements Serializable {
         this.coordenacao = coordenacao;
     }
 
-    public Papel getPapel() {
-        return papel;
+    public boolean isIsCoordenador() {
+        return isCoordenador;
     }
 
-    public void setPapel(Papel papel) {
-        this.papel = papel;
+    public void setIsCoordenador(boolean isCoordenador) {
+        this.isCoordenador = isCoordenador;
     }
+
+    public byte[] getAssinatura() {
+        return assinatura;
+    }
+
+    public void setAssinatura(byte[] assinatura) {
+        this.assinatura = assinatura;
+    }
+
+   
 
     public void setLogin(String login) {
         this.login = login;

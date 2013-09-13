@@ -30,10 +30,16 @@ public class Coordenacao implements Serializable {
     private List<Disciplina> diciplinas;
 
     private static final long serialVersionUID = 1L;
-    @Id
     private String codigo;
-    @Column
     private String descricao;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     
     public String getCodigo() {

@@ -23,17 +23,29 @@ public class Turma implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String codigo;
-    
-    @Column
     private String descricao;
     
     @ManyToOne
     private Coordenacao coordenacao;
-    
-    
 
+    public Turma() {
+    }
+
+    public Turma(String codigo, String descricao, Coordenacao coordenacao) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.coordenacao = coordenacao;
+    }
     public String getCodigo() {
         return codigo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCodigo(String codigo) {
