@@ -17,7 +17,9 @@
         <div id="box">
             <form action="LoginManager" method="POST" class="form-horizontal" accept-charset="ISO-8859-1">
                 <fieldset >
-                    <h5 class="row">${erroLogin}</h5>
+                    <c:if test="${erroLogin!=null}">
+                        <h5 class="row">${erroLogin}</h5>
+                    </c:if>
                     <label for="username">Usuário</label>
                     <div>
                         <div class="input-prepend">

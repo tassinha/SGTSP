@@ -4,8 +4,9 @@
  */
 package br.edu.utfpr.cm.sgtsp.login;
 
-
 import br.edu.utfpr.cm.saa.entidades.Usuario;
+import br.edu.utfpr.cm.sgtsp.ldap.LDAP;
+import br.edu.utfpr.sgtsp.daos.UsuarioDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import userLDAP.LoginLDAP;
 import userLDAP.UserLDAP;
 
@@ -69,7 +71,7 @@ public class LoginManager extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
-       // doPost(request, response);
+        // doPost(request, response);
         String ok = request.getParameter("ok");
         String tipo = request.getParameter("tipo");
         if (ok.equals("logout")) {
@@ -78,10 +80,10 @@ public class LoginManager extends HttpServlet {
             request.getSession().removeAttribute("usuario");
             request.getSession().removeAttribute("administrador");
         }
-        if("admin".equals(tipo)){
-        response.sendRedirect("admin/index.jsp");
-        return;
-            
+        if ("admin".equals(tipo)) {
+            response.sendRedirect("admin/index.jsp");
+            return;
+
         }
         response.sendRedirect("Login.jsp");
     }
@@ -100,33 +102,80 @@ public class LoginManager extends HttpServlet {
             throws ServletException, IOException {
         // processRequest(request, response);
         String ok = request.getParameter("ok");
-            HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         if (ok.equals("login")) {
 
             String login = request.getParameter("username").trim();
             String senha = request.getParameter("password").trim();
-            if (ldap.logarNoLDAP(login, senha) != null) {
-                Usuario usuario = ldap.logarNoLDAP(login, senha);
 
-                usuario.setLogin(login);
-                session.setAttribute("usuario", usuario);
-
+            Usuario usuarioLocal = ehOAdmin(login, senha);
+            Usuario usuarioLDAP = autenticarUsuario(login, senha);
+            if (usuarioLocal != null) {
+                request.getSession().setAttribute("UsuarioLogado", usuarioLocal);
+                System.out.println("Logado como Administrador do sistema");
+                response.sendRedirect("index.jsp");
             } else {
+                if (usuarioLDAP != null) {
+                    Usuario usuario = ldap.logarNoLDAP(login, senha);
 
-                Usuario usuario = new UserLDAP();
-                usuario.setLogin(login);
-                usuario.setNome(login);
-                usuario.setEmail(login);
-                session.setAttribute("usuario", usuario);
+                    usuario.setLogin(login);
+                    session.setAttribute("usuario", usuario);
 
+                    response.sendRedirect("index.jsp");
+                } else {
 
+                    Usuario usuario = new UserLDAP();
+                    usuario.setLogin(login);
+                    usuario.setNome(login);
+                    usuario.setEmail(login);
+                    session.setAttribute("usuario", usuario);
+
+                    request.getSession().setAttribute("erroLogin", "Login ou Senha incorretos");
+                    response.sendRedirect("Login.jsp");
+                }
             }
-            response.sendRedirect("index.jsp");
-        }else{
+        } else {
             session.removeAttribute("usuario");
             response.sendRedirect("Login.jsp");
         }
-       
+
+    }
+
+    private Usuario autenticarUsuario(String login, String senha) {
+
+        Usuario user = LDAP.buscarUsuario(login);
+        System.out.println("****************" + login);
+
+        if (user != null) {
+            try {
+                if (LDAP.autenticacao(login, senha)) {
+                    return user;
+                } else {
+                    return null;
+                }
+            } catch (IncorrectCredentialsException e) {
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+    }
+
+    private Usuario ehOAdmin(String login, String senha) {
+        if (login.equals("admin")) {
+            UsuarioDao dao = new UsuarioDao();
+            Usuario usuario = dao.obterPorLogin(login);
+            System.out.println("");
+            System.out.println("Senha " + senha);
+            if (senha.equals("admin123")) {
+                return usuario;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     /**

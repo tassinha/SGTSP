@@ -38,10 +38,10 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                  <p class="navbar-text pull-right">
-                        <c:if test="${usuario!=null}">
+                        <c:if test="${UsuarioLogado!=null}">
                             Logado Como: <a href="#" class="navbar-link"></a>  
 
-                            <strong style="color: #FFFBEF"> <c:out value="${usuario.nome}"/> </strong> - 
+                            <strong style="color: #FFFBEF"> <c:out value="${UsuarioLogado.nome}"/> </strong> - 
                             <a href="LoginManager?ok=logout" title="Sair" > Sair</a> 
                         </c:if>
 
