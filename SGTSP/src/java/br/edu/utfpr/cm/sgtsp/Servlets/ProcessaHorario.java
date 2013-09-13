@@ -118,8 +118,8 @@ public class ProcessaHorario extends HttpServlet {
         out.println("<h1>Conteudo do MAP </h1>");
 
 
-       // String pasta = getServletContext().getContextPath();
-        String pasta ="d:/arquivos";
+//        String pasta = getServletContext().getContextPath();
+        String pasta ="/home/joao/Downloads/";
         File f = new File(pasta);
         if (f.isDirectory()) {
         } else {
@@ -165,28 +165,35 @@ public class ProcessaHorario extends HttpServlet {
                             String s = (String) m.get(key);
 
                             //------ teste JP -----\\
-/*
+
                             if (s.length() > 3) {
                                 
                                 s.trim();
-                                String[] vetor = s.split(" ");
-                                String turma = vetor[3];
-                                String disciplina = vetor[2];
+                                String[] vetor = s.split("-");
+                                String turma = vetor[0];
+                                String disciplina = vetor[0];
+                                
+                                int indice = disciplina.lastIndexOf(" ");
+                                String codigodiciplina = disciplina.substring(0, indice);
+                                String descricao = disciplina.substring(indice, disciplina.length());
+                                
+                                     out.println("<p> Disciplionas: " + codigodiciplina + "</p>");
+                                     out.println("<p> Disciplionas: " + descricao + "</p>");
                                 
                                 
-                                out.println("<p> Disciplionas: " + disciplina + "</p>");
+                     
                                 
                                 if(vetor[3].length() == 4)
                                 out.println("<p> Turma: " + turma+ "</p>");
                                 
-                              Coordenacao cordenacao = new Coordenacao();
-                              cordenacao.setDescricao("Coint");
+//                              Coordenacao cordenacao = new Coordenacao();
+//                              cordenacao.setDescricao("Coint");
                               
-                              Turma t = new Turma();
-                              t.setCoordenacao(null);
-                              t.setDescricao(turma);
-                              
-                              new TurmaDao(t).persist();
+//                              Turma t = new Turma();
+//                              t.setCoordenacao(null);
+//                              t.setDescricao(turma);
+//                              
+//                              new TurmaDao(t).persist();
                               
 //                              if(!new TurmaDao().exist(t.getDescricao())){
 //                                out.println("<p> entrouuuuuuuuuuuu </p>");
@@ -199,18 +206,18 @@ public class ProcessaHorario extends HttpServlet {
                               
                             //------ fim do teste JP ----\\
 
-                            */    
+                               
                                 
-                            if (s.length() > 3) {
-                                out.println("<p>Chave - > " + key + " valor: " + s + "</p>");
-                            }
+//                            if (s.length() > 3) {
+//                                out.println("<p>Chave - > " + key + " valor: " + s + "</p>");
+//                            }
                         
                     } 
                 }
                 out.println("</body>");
                 out.println("</html>");
 
-            }} catch (FileNotFoundException e) {
+            }} }catch (FileNotFoundException e) {
                 System.out.println(e);
             } catch (FileUploadException e) {
                 System.out.println(e);
