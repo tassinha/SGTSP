@@ -42,7 +42,7 @@
                             Logado Como: <a href="#" class="navbar-link"></a>  
 
                             <strong style="color: #FFFBEF"> <c:out value="${UsuarioLogado.nome}"/> </strong> - 
-                            <a href="LoginManager?ok=logout" title="Sair" > Sair</a> 
+                            <a href="FazerLogout" title="Sair" > Sair</a> 
                         </c:if>
 
 
