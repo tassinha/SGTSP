@@ -6,7 +6,11 @@ package br.edu.utfpr.cm.sgtsp.Servlets;
 
 import br.edu.utfpr.cm.sgtsp.parsehtml.ParseHtmlHorario;
 import br.edu.utfpr.sgtsp.beans.Coordenacao;
+import br.edu.utfpr.sgtsp.beans.Disciplina;
 import br.edu.utfpr.sgtsp.beans.Turma;
+import br.edu.utfpr.sgtsp.daos.AulaDao;
+import br.edu.utfpr.sgtsp.daos.CoordenacaoDao;
+import br.edu.utfpr.sgtsp.daos.DisciplinaDao;
 import br.edu.utfpr.sgtsp.daos.TurmaDao;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -105,6 +109,8 @@ public class ProcessaHorario extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
 
+        Disciplina d;
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
               
@@ -173,18 +179,22 @@ public class ProcessaHorario extends HttpServlet {
                                 String turma = vetor[0];
                                 String disciplina = vetor[0];
                                 
-                                int indice = disciplina.lastIndexOf(" ");
-                                String codigodiciplina = disciplina.substring(0, indice);
-                                String descricao = disciplina.substring(indice, disciplina.length());
+                                d = new Disciplina();
                                 
-                                     out.println("<p> Disciplionas: " + codigodiciplina + "</p>");
-                                     out.println("<p> Disciplionas: " + descricao + "</p>");
+                                int indice = disciplina.lastIndexOf(" ");
+                                String descricao = disciplina.substring(0, indice);
+                                String codigo = disciplina.substring(indice, disciplina.length());
+                                d.setNome(descricao);
+                                d.setCodigo(codigo);
+                                d.setCoordenacao(new CoordenacaoDao().get(new Long("1")));
+                                
+                                new DisciplinaDao(d).persist();
+//                                     out.println("<p> Disciplionas: " + codigodiciplina + "</p>");
+//                                     out.println("<p> Disciplionas: " + descricao + "</p>");
                                 
                                 
                      
                                 
-                                if(vetor[3].length() == 4)
-                                out.println("<p> Turma: " + turma+ "</p>");
                                 
 //                              Coordenacao cordenacao = new Coordenacao();
 //                              cordenacao.setDescricao("Coint");
@@ -219,10 +229,13 @@ public class ProcessaHorario extends HttpServlet {
 
             }} }catch (FileNotFoundException e) {
                 System.out.println(e);
+                e.printStackTrace();
             } catch (FileUploadException e) {
                 System.out.println(e);
+                e.printStackTrace();
             } catch (Exception e) {
                 System.out.println(e);
+                e.printStackTrace();
             }
         }
     }
