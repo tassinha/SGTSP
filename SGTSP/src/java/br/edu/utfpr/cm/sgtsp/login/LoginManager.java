@@ -119,7 +119,7 @@ public class LoginManager extends HttpServlet {
                 System.out.println("Logado como Administrador do sistema");
                 response.sendRedirect("index.jsp");
             } else {
-                if (!login.equals("admin")) {
+                if (!login.equals("admin") && !verificarSegundoDigito(login.charAt(1))) {
                     if (usuarioLDAP != null) {
                         usuarioLocal = verificarNaBaseLocal(login, senha);
                         if (usuarioLocal != null) {
@@ -223,6 +223,25 @@ public class LoginManager extends HttpServlet {
             return null;
         }
     }
+
+    private boolean verificarSegundoDigito(char digito2) {
+        switch (digito2) {
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                return true;
+            default:
+                return false;
+        }
+    }
+
     /**
      * Returns a short description of the servlet.
      *
