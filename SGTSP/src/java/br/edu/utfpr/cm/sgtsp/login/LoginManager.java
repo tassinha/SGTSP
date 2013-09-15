@@ -6,6 +6,10 @@ package br.edu.utfpr.cm.sgtsp.login;
 
 import br.edu.utfpr.cm.saa.entidades.Usuario;
 import br.edu.utfpr.cm.sgtsp.ldap.LDAP;
+import br.edu.utfpr.sgtsp.beans.Administrador;
+import br.edu.utfpr.sgtsp.beans.Professor;
+import br.edu.utfpr.sgtsp.daos.AdministradorDao;
+import br.edu.utfpr.sgtsp.daos.ProfessorDao;
 import br.edu.utfpr.sgtsp.daos.UsuarioDao;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -115,22 +119,36 @@ public class LoginManager extends HttpServlet {
                 System.out.println("Logado como Administrador do sistema");
                 response.sendRedirect("index.jsp");
             } else {
-                if (usuarioLDAP != null) {
-                    Usuario usuario = ldap.logarNoLDAP(login, senha);
-
-                    usuario.setLogin(login);
-                    session.setAttribute("usuario", usuario);
-
-                    response.sendRedirect("index.jsp");
+                if (!login.equals("admin")) {
+                    if (usuarioLDAP != null) {
+                        usuarioLocal = verificarNaBaseLocal(login, senha);
+                        if (usuarioLocal != null) {
+                            session.setAttribute("UsuarioLogado", usuarioLocal);
+                            System.out.println("Logado através da base do Sistema");
+                            response.sendRedirect("index.jsp");
+                        } else {
+                            Professor professor = setProfessorNaBaseLocal(usuarioLDAP);
+                            session.setAttribute("Professor", professor);
+                            session.setAttribute("UsuarioLogado", usuarioLDAP);
+                            System.out.println("Logado através do LDAP");
+                            response.sendRedirect("CadastrarProfessor.jsp");
+                        }
+                    } else {
+                        /* Apenas para teste de usuário fora da UTFPR */
+//                        usuarioLocal = verificarNaBaseLocal(login, senha);
+//                        if (usuarioLocal != null) {
+//                            session.setAttribute("UsuarioLogado", usuarioLocal);
+//                            System.out.println("Logado através da base do Sistema");
+//                            response.sendRedirect("index.jsp");
+//                        }
+                        /* Dentro das dependencias da UTFPR */
+                        request.getSession().setAttribute("erroLogin", "Login ou Senha incorretos");
+                        System.out.println("Não autenticou no LDAP");
+                        response.sendRedirect("Login.jsp");
+                    }
                 } else {
-
-                    Usuario usuario = new UserLDAP();
-                    usuario.setLogin(login);
-                    usuario.setNome(login);
-                    usuario.setEmail(login);
-                    session.setAttribute("usuario", usuario);
-
                     request.getSession().setAttribute("erroLogin", "Login ou Senha incorretos");
+                    System.out.println("Usuário não cadastrado no banco");
                     response.sendRedirect("Login.jsp");
                 }
             }
@@ -164,10 +182,11 @@ public class LoginManager extends HttpServlet {
 
     private Usuario ehOAdmin(String login, String senha) {
         if (login.equals("admin")) {
-            UsuarioDao dao = new UsuarioDao();
-            Usuario usuario = dao.obterPorLogin(login);
-            System.out.println("");
-            System.out.println("Senha " + senha);
+            Administrador admin = new AdministradorDao().obterPorLogin(login);
+            Usuario usuario = new Usuario();
+            usuario.setLogin(admin.getLogin());
+            usuario.setEmail(admin.getEmail());
+            usuario.setNome(admin.getNome());
             if (senha.equals("admin123")) {
                 return usuario;
             } else {
@@ -178,6 +197,32 @@ public class LoginManager extends HttpServlet {
         }
     }
 
+    private Usuario verificarNaBaseLocal(String login, String senha) {
+        if (login.isEmpty() || login.equals("")) {
+            return null;
+        } else {
+            Professor professor = new ProfessorDao().obterPorLogin(login);
+            Usuario usuario = new Usuario();
+            usuario.setLogin(professor.getLogin());
+            usuario.setEmail(professor.getEmail());
+            usuario.setNome(professor.getNome());
+            System.out.println(usuario.toString());
+            return usuario;
+        }
+    }
+
+    private Professor setProfessorNaBaseLocal(Usuario usuario) {
+        if (usuario != null) {
+            Professor professor = new Professor();
+            professor.setEmail(usuario.getEmail());
+            professor.setLogin(usuario.getLogin());
+            professor.setNome(usuario.getNome());
+            System.out.println(professor.toString());
+            return professor;
+        } else {
+            return null;
+        }
+    }
     /**
      * Returns a short description of the servlet.
      *

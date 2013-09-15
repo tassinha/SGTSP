@@ -22,24 +22,26 @@ import br.edu.utfpr.sgtsp.daos.UsuarioDao;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author josimar
  */
 public class Testes {
+
     public static void main(String[] args) {
         Mapeador.criarTabelas();
-        
+
         Administrador administrador = new Administrador();
         administrador.setLogin("admin");
-        administrador.setNome("Administrador");
+        administrador.setNome("Administrador do Sistema");
         administrador.setEmail("admin@admin.com");
         administrador.setSenha("admin123");
         new AdministradorDao(administrador).persist();
+        
         Professor p = new Professor();
         p.setLogin("Kassia");
-        
+        p.setNome("Kassia Camargo");
+        p.setEmail("teste@teste.com");
         new ProfessorDao(p).persist();
         Professor pr = new ProfessorDao().obterPorLogin("Kassia");
         System.out.println(pr.getLogin());
@@ -49,18 +51,18 @@ public class Testes {
         Turma t = new Turma("NE5A", "AAAAAAAAAA", c);
         new TurmaDao(t).persist();
         Disciplina d = new Disciplina("PI35A", "Projeto Integrador II", c);
-        
+
         new DisciplinaDao(d).persist();
         Aula a = new Aula();
         a.setDiciplina(d);
         a.setProfessor(pr);
         a.setTurma(t);
-       new AulaDao(a).persist();
-        
+        new AulaDao(a).persist();
+
         Horario h = new Horario();
-      
-        h.addAula(DescricaoHorarios.SEG_M_1,a);
+
+        h.addAula(DescricaoHorarios.SEG_M_1, a);
         new HorarioDao(h).persist();
-        
+
     }
 }

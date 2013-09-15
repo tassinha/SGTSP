@@ -44,8 +44,6 @@
                             <strong style="color: #FFFBEF"> <c:out value="${UsuarioLogado.nome}"/> </strong> - 
                             <a href="FazerLogout" title="Sair" > Sair</a> 
                         </c:if>
-
-
                     </p>    
                 <div class="container">
                     <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
