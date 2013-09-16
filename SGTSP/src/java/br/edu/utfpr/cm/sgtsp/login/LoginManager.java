@@ -119,7 +119,9 @@ public class LoginManager extends HttpServlet {
                 System.out.println("Logado como Administrador do sistema");
                 response.sendRedirect("index.jsp");
             } else {
-                if (!login.equals("admin") && !verificarSegundoDigito(login.charAt(1))) {
+                if (!login.equals("admin")) {
+                    /* if (usuarioLDAP != null && !verificarSegundoDigito(login.charAt(1)))
+                     adicionar esta linha ao final do projeto para apenas professores logarem */
                     if (usuarioLDAP != null) {
                         usuarioLocal = verificarNaBaseLocal(login, senha);
                         if (usuarioLocal != null) {
@@ -202,12 +204,16 @@ public class LoginManager extends HttpServlet {
             return null;
         } else {
             Professor professor = new ProfessorDao().obterPorLogin(login);
-            Usuario usuario = new Usuario();
-            usuario.setLogin(professor.getLogin());
-            usuario.setEmail(professor.getEmail());
-            usuario.setNome(professor.getNome());
-            System.out.println(usuario.toString());
-            return usuario;
+            if (professor != null) {
+                Usuario usuario = new Usuario();
+                usuario.setLogin(professor.getLogin());
+                usuario.setEmail(professor.getEmail());
+                usuario.setNome(professor.getNome());
+                System.out.println(usuario.toString());
+                return usuario;
+            } else {
+                return null;
+            }
         }
     }
 
@@ -217,6 +223,7 @@ public class LoginManager extends HttpServlet {
             professor.setEmail(usuario.getEmail());
             professor.setLogin(usuario.getLogin());
             professor.setNome(usuario.getNome());
+            new ProfessorDao(professor).persist();
             System.out.println(professor.toString());
             return professor;
         } else {
