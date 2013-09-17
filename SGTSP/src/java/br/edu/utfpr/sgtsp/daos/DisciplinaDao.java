@@ -16,9 +16,13 @@ public class DisciplinaDao extends DaoGenerico<Disciplina> {
     public DisciplinaDao() {
         super();
     }
+    
 
     public DisciplinaDao(Disciplina disciplina) {
         super(disciplina);
     }
-    
+
+    public boolean exist(String descricao){
+        return getCampoTabelaIgualParametro("codigo", descricao).isEmpty();
+    }
 }

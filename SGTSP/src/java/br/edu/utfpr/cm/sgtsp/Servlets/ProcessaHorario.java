@@ -110,10 +110,11 @@ public class ProcessaHorario extends HttpServlet {
         //processRequest(request, response);
 
         Disciplina d;
-        
+        Turma t;
+
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-              
+
 
         /* TODO output your page here. You may use following sample code. */
         out.println("<html>");
@@ -125,7 +126,7 @@ public class ProcessaHorario extends HttpServlet {
 
 
 //        String pasta = getServletContext().getContextPath();
-        String pasta ="/home/joao/Downloads/";
+        String pasta = "/home/joao/Downloads/";
         File f = new File(pasta);
         if (f.isDirectory()) {
         } else {
@@ -169,65 +170,70 @@ public class ProcessaHorario extends HttpServlet {
                         print(request, response, "teste " + keySet.size());
                         for (String key : keySet) {
                             String s = (String) m.get(key);
+                            out.println("<p>" + s + "</p>");
 
                             //------ teste JP -----\\
 
                             if (s.length() > 3) {
-                                
+
                                 s.trim();
                                 String[] vetor = s.split("-");
-                                String turma = vetor[0];
-                                String disciplina = vetor[0];
-                                
-                                d = new Disciplina();
-                                
-                                int indice = disciplina.lastIndexOf(" ");
-                                String descricao = disciplina.substring(0, indice);
-                                String codigo = disciplina.substring(indice, disciplina.length());
-                                d.setNome(descricao);
-                                d.setCodigo(codigo);
-                                d.setCoordenacao(new CoordenacaoDao().get(new Long("1")));
-                                
-                                new DisciplinaDao(d).persist();
-//                                     out.println("<p> Disciplionas: " + codigodiciplina + "</p>");
-//                                     out.println("<p> Disciplionas: " + descricao + "</p>");
-                                
-                                
-                     
-                                
-                                
-//                              Coordenacao cordenacao = new Coordenacao();
-//                              cordenacao.setDescricao("Coint");
-                              
-//                              Turma t = new Turma();
-//                              t.setCoordenacao(null);
-//                              t.setDescricao(turma);
-//                              
-//                              new TurmaDao(t).persist();
-                              
-//                              if(!new TurmaDao().exist(t.getDescricao())){
-//                                out.println("<p> entrouuuuuuuuuuuu </p>");
-//                              }else {
-//                                out.println("<p>Não  entrouuuuuuuuuuuu </p>");
-//                              
-//                              }
-                              
-                              
-                              
-                            //------ fim do teste JP ----\\
+                                if (vetor.length == 2) {
+                                    for (String string : vetor) {
+                                        System.out.println(string);
+                                    }
+                                    String disciplina = vetor[0];
+                                    String turma = vetor[1];
 
-                               
-                                
+                                    d = new Disciplina();
+                                    t = new Turma();
+
+                                    int indice = disciplina.lastIndexOf(" ");
+                                    int indice2 = turma.lastIndexOf(" ");
+                                    String descricao = disciplina.substring(0, indice);
+                                    String codigo = disciplina.substring(indice, disciplina.length());
+                                    String sala = turma.substring(0 ,indice2);
+                                    String codigoTurma = turma.substring(indice2, turma.length());
+                                    System.out.println("@@@@@@@@@@@@@" + turma);
+
+                                    d.setNome(descricao);
+                                    d.setCodigo(codigo);
+                                    d.setCoordenacao(new CoordenacaoDao().get(new Long("1")));
+                                    
+                                    t.setCodigo(codigoTurma);
+                                    t.setCoordenacao(new CoordenacaoDao().get(new Long("1")));
+                                    t.setDescricao(codigoTurma);
+
+                                    if (new DisciplinaDao().exist(d.getCodigo())) {
+                                        new DisciplinaDao(d).persist();
+                                        out.println("<p>  Ok passouuuuuuuuuuuu </p>");
+                                    }
+                                    
+                                    
+                                    if (new TurmaDao().exist(t.getCodigo())) {
+                                        new TurmaDao(t).persist();
+                                        out.println("<p>  Ok passouuuuuuuuuuuu </p>");
+                                    }
+
+                                }
+
+
+                                //------ fim do teste JP ----\\
+
+
+
 //                            if (s.length() > 3) {
 //                                out.println("<p>Chave - > " + key + " valor: " + s + "</p>");
 //                            }
-                        
-                    } 
-                }
-                out.println("</body>");
-                out.println("</html>");
 
-            }} }catch (FileNotFoundException e) {
+                            }
+                        }
+                        out.println("</body>");
+                        out.println("</html>");
+
+                    }
+                }
+            } catch (FileNotFoundException e) {
                 System.out.println(e);
                 e.printStackTrace();
             } catch (FileUploadException e) {

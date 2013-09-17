@@ -17,6 +17,7 @@ public class TurmaDao extends DaoGenerico<Turma> {
     public TurmaDao() {
         super();
     }
+    
 
     public TurmaDao(Turma turma) {
         super(turma);
