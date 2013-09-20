@@ -9,6 +9,7 @@ import br.edu.utfpr.sgtsp.beans.Coordenacao;
 import br.edu.utfpr.sgtsp.beans.Disciplina;
 import br.edu.utfpr.sgtsp.beans.Horario;
 import br.edu.utfpr.sgtsp.beans.Professor;
+import br.edu.utfpr.sgtsp.beans.Solicitacao;
 import br.edu.utfpr.sgtsp.beans.Turma;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,6 +47,7 @@ public class Mapeador {
       addClass(Turma.class);
       addClass(Administrador.class);
       addClass(Coordenacao.class);
+      addClass(Solicitacao.class);
      // addClass(Sistema.class);
      // addClass(Usuario.class);
       

@@ -111,6 +111,11 @@ public class LoginManager extends HttpServlet {
 
             String login = request.getParameter("username").trim();
             String senha = request.getParameter("password").trim();
+            if("".equals(senha)){
+                request.getSession().setAttribute("erroLogin", "Erro: Senha não informada");
+                response.sendRedirect("Login.jsp");
+                return;
+            }
 
             Usuario usuarioLocal = ehOAdmin(login, senha);
             Usuario usuarioLDAP = autenticarUsuario(login, senha);

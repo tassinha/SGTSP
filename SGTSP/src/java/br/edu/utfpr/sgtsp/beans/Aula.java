@@ -5,7 +5,12 @@
 package br.edu.utfpr.sgtsp.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -16,6 +21,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Aula implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
@@ -26,9 +32,21 @@ public class Aula implements Serializable {
     private Turma turma;
     @ManyToOne
     private Disciplina diciplina;
+    //@Column(columnDefinition = "BLOB")
+    //@Enumerated(EnumType.STRING)
+    //private List<DescricaoHorarios> horarios;
+
     public Long getId() {
         return id;
     }
+
+//    public Aula() {
+//        this.horarios = new ArrayList<DescricaoHorarios>();
+//    }
+//
+//    public void addHorario(DescricaoHorarios descricaoHorarios) {
+//        this.horarios.add(descricaoHorarios);
+//    }
 
     public void setId(Long id) {
         this.id = id;
@@ -57,7 +75,4 @@ public class Aula implements Serializable {
     public void setDiciplina(Disciplina diciplina) {
         this.diciplina = diciplina;
     }
-    
-    
-    
 }

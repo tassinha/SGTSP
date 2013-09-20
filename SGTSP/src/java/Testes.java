@@ -8,6 +8,7 @@ import br.edu.utfpr.sgtsp.beans.DescricaoHorarios;
 import br.edu.utfpr.sgtsp.beans.Disciplina;
 import br.edu.utfpr.sgtsp.beans.Horario;
 import br.edu.utfpr.sgtsp.beans.Professor;
+import br.edu.utfpr.sgtsp.beans.Solicitacao;
 import br.edu.utfpr.sgtsp.beans.Turma;
 import br.edu.utfpr.sgtsp.daos.AdministradorDao;
 import br.edu.utfpr.sgtsp.daos.AulaDao;
@@ -15,6 +16,7 @@ import br.edu.utfpr.sgtsp.daos.CoordenacaoDao;
 import br.edu.utfpr.sgtsp.daos.DisciplinaDao;
 import br.edu.utfpr.sgtsp.daos.HorarioDao;
 import br.edu.utfpr.sgtsp.daos.ProfessorDao;
+import br.edu.utfpr.sgtsp.daos.SolicitacaoDao;
 import br.edu.utfpr.sgtsp.daos.TurmaDao;
 import br.edu.utfpr.sgtsp.daos.UsuarioDao;
 
@@ -57,12 +59,28 @@ public class Testes {
         a.setDiciplina(d);
         a.setProfessor(pr);
         a.setTurma(t);
+        
         new AulaDao(a).persist();
 
         Horario h = new Horario();
 
         h.addAula(DescricaoHorarios.SEG_M_1, a);
+        h.addAula(DescricaoHorarios.SEG_M_2, a);
+        h.addAula(DescricaoHorarios.SEG_M_3, a);
+      
         new HorarioDao(h).persist();
+        Solicitacao s = new Solicitacao();
+        s.setProfessorRequerente(pr);
+        s.addAula(a);
+        new SolicitacaoDao(s).persist();
+        System.out.println(  new HorarioDao().get(h.getId()).getAulas().size());
 
     }
 }
+/*
+ *   ImageResizerService irs = new ImageResizerService(arquivo);
+                            byte[] assinatura = irs.getNormal(240);
+                          Professor p = (Professor) request.getSession().getAttribute("Professor");
+                          p.setAssinatura(assinatura);
+                          new ProfessorDao(p).persist();
+ */
