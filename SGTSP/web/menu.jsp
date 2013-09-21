@@ -29,6 +29,7 @@
                             <li  <c:if test="${param.menu=='home'}"> class="active" </c:if>><a href="index.jsp?menu=home">Home</a></li>
                             <li <c:if test="${param.menu=='cadprof'}"> class="active" </c:if>><a href="CadastrarProfessor.jsp?menu=cadprof">Atualizar Dados</a></li>
                             <li <c:if test="${param.menu=='upload'}"> class="active" </c:if>><a href="upload_arq_html.jsp?menu=upload">Upload Aquivo HTML</a></li>
+                            <li <c:if test="${param.menu=='solicitacao'}"> class="active" </c:if>><a href="solicitacao.jsp?menu=solicitacao">Solicitação</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>

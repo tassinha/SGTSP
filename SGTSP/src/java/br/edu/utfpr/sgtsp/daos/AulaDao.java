@@ -6,6 +6,8 @@ package br.edu.utfpr.sgtsp.daos;
 
 import br.edu.utfpr.cm.sgtsp.hibernate.DaoGenerico;
 import br.edu.utfpr.sgtsp.beans.Aula;
+import br.edu.utfpr.sgtsp.beans.Professor;
+import java.util.List;
 
 /**
  *
@@ -19,6 +21,10 @@ public class AulaDao extends DaoGenerico<Aula>{
 
     public AulaDao(Aula aula) {
         super(aula);
+    }
+    public List<Aula> getAulasPorProfessor(Professor professor ){
+        
+        return getCampoTabelaIgualParametro("professor", professor);
     }
     
     
