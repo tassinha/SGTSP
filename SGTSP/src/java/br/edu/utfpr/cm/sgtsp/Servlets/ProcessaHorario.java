@@ -5,19 +5,23 @@
 package br.edu.utfpr.cm.sgtsp.Servlets;
 
 import br.edu.utfpr.cm.sgtsp.parsehtml.ParseHtmlHorario;
-import br.edu.utfpr.sgtsp.beans.Coordenacao;
+import br.edu.utfpr.sgtsp.beans.Aula;
 import br.edu.utfpr.sgtsp.beans.Disciplina;
+import br.edu.utfpr.sgtsp.beans.Horario;
+import br.edu.utfpr.sgtsp.beans.Professor;
 import br.edu.utfpr.sgtsp.beans.Turma;
 import br.edu.utfpr.sgtsp.daos.AulaDao;
 import br.edu.utfpr.sgtsp.daos.CoordenacaoDao;
 import br.edu.utfpr.sgtsp.daos.DisciplinaDao;
+import br.edu.utfpr.sgtsp.daos.HorarioDao;
+import br.edu.utfpr.sgtsp.daos.ProfessorDao;
 import br.edu.utfpr.sgtsp.daos.TurmaDao;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +35,6 @@ import org.apache.tomcat.util.http.fileupload.DiskFileUpload;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.jsoup.nodes.Document;
 
 /**
  *
@@ -111,6 +114,10 @@ public class ProcessaHorario extends HttpServlet {
 
         Disciplina d;
         Turma t;
+        
+
+        Professor professor = new ProfessorDao().get(new Long(1));
+        //Professor professor = (Professor) request.getSession().getAttribute("UsuarioLogado");
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -126,7 +133,7 @@ public class ProcessaHorario extends HttpServlet {
 
 
 //        String pasta = getServletContext().getContextPath();
-        String pasta = "/home/joao/Downloads/";
+        String pasta = "C:\\Users\\Ge\\Downloads";
         File f = new File(pasta);
         if (f.isDirectory()) {
         } else {
@@ -166,11 +173,12 @@ public class ProcessaHorario extends HttpServlet {
 
 
                         Map m = new ParseHtmlHorario().Parse(arquivo);
+                        
+                        out.println(m);
                         Set<String> keySet = m.keySet();
                         print(request, response, "teste " + keySet.size());
                         for (String key : keySet) {
                             String s = (String) m.get(key);
-                            out.println("<p>" + s + "</p>");
 
                             //------ teste JP -----\\
 
@@ -182,6 +190,9 @@ public class ProcessaHorario extends HttpServlet {
                                     for (String string : vetor) {
                                         System.out.println(string);
                                     }
+                                    out.println("<p>" + s +"---"+key+ "</p>");
+                                    
+
                                     String disciplina = vetor[0];
                                     String turma = vetor[1];
 
@@ -192,32 +203,49 @@ public class ProcessaHorario extends HttpServlet {
                                     int indice2 = turma.lastIndexOf(" ");
                                     String descricao = disciplina.substring(0, indice);
                                     String codigo = disciplina.substring(indice, disciplina.length());
-                                    String sala = turma.substring(0 ,indice2);
+                                    String sala = turma.substring(0, indice2);
                                     String codigoTurma = turma.substring(indice2, turma.length());
-                                    System.out.println("@@@@@@@@@@@@@" + turma);
+                                    codigo = codigo.replace(" ", "");
+                                    codigoTurma = codigoTurma.replace(" ", "");
 
-                                    d.setNome(descricao);
-                                    d.setCodigo(codigo);
-                                    d.setCoordenacao(new CoordenacaoDao().get(new Long("1")));
-                                    
-                                    t.setCodigo(codigoTurma);
-                                    t.setCoordenacao(new CoordenacaoDao().get(new Long("1")));
-                                    t.setDescricao(codigoTurma);
+                                  
+                                    if (new DisciplinaDao().exist(codigo)) {
+                                        d = new DisciplinaDao().obtem(codigo);
+                                        System.out.println("entre if ------------"+d.getNome());
 
-                                    if (new DisciplinaDao().exist(d.getCodigo())) {
+                                    } else {
+                                        System.out.println("Entrei else");
+                                        d.setNome(descricao);
+                                        d.setCodigo(codigo);
+                                        d.setCoordenacao(new CoordenacaoDao().get(new Long("1")));
                                         new DisciplinaDao(d).persist();
-                                        out.println("<p>  Ok passouuuuuuuuuuuu </p>");
-                                    }
-                                    
-                                    
-                                    if (new TurmaDao().exist(t.getCodigo())) {
-                                        new TurmaDao(t).persist();
-                                        out.println("<p>  Ok passouuuuuuuuuuuu </p>");
                                     }
 
+
+                                    if (new TurmaDao().exist(codigoTurma)) {
+                                        System.out.println("entrei if turma");
+                                        t = new TurmaDao().obtem(codigoTurma);
+                                    } else {
+                                        t.setCodigo(codigoTurma);
+                                        t.setCoordenacao(new CoordenacaoDao().get(new Long("1")));
+                                        t.setDescricao(codigoTurma);
+                                        new TurmaDao(t).persist();
+                                    }
+
+                                    Aula aula = new Aula();
+                                    aula.setHora(key);
+                                    aula.setDiciplina(d);
+                                    aula.setTurma(t);
+                                    aula.setProfessor(professor);
+                                    
+                                    
+//                                    if (new AulaDao().exist(aula.getDiciplina().getId())) {
+                                        new AulaDao(aula).persist();
+//                                    }
+                                    
                                 }
 
-
+                                
                                 //------ fim do teste JP ----\\
 
 
@@ -228,6 +256,7 @@ public class ProcessaHorario extends HttpServlet {
 
                             }
                         }
+                        
                         out.println("</body>");
                         out.println("</html>");
 
@@ -245,7 +274,7 @@ public class ProcessaHorario extends HttpServlet {
             }
         }
     }
-
+    
     /**
      * Returns a short description of the servlet.
      *

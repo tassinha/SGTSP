@@ -5,8 +5,10 @@
 package br.edu.utfpr.sgtsp.daos;
 
 import br.edu.utfpr.cm.sgtsp.hibernate.DaoGenerico;
+import br.edu.utfpr.sgtsp.beans.Disciplina;
 import br.edu.utfpr.sgtsp.beans.Turma;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Expression;
 
 /**
  *
@@ -23,8 +25,14 @@ public class TurmaDao extends DaoGenerico<Turma> {
         super(turma);
     }
     
-    public boolean exist(String descricao){
-        return getCampoTabelaIgualParametro("descricao", descricao).isEmpty();
+    public boolean exist(String codigo){
+        return !getCampoTabelaIgualParametro("codigo", codigo).isEmpty();
+    }
+    
+    public Turma obtem(String codigo){
+        Criteria criteria = getCriteria();
+        criteria.add(Expression.eq("codigo", codigo));
+        return uniqueResult(criteria);
     }
     
 }
