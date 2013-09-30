@@ -95,6 +95,7 @@ public class Solicitacao extends HttpServlet {
 
         c.add(Expression.eq("codigo", professor.getCoordenacao()));
         
+        
         for (Professor prof : p.listResult(c)) {
             System.out.println("Professor: "+prof.toString());
         }
