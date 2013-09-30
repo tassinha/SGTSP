@@ -93,4 +93,11 @@ public class Professor implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Professor{" + "id=" + id + ", nome=" + nome + ", email=" + email + ", login=" + login + ", coordenacao=" + coordenacao + ", isCoordenador=" + isCoordenador + ", assinatura=" + assinatura + '}';
+    }
+    
+    
 }
