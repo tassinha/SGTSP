@@ -12,10 +12,16 @@
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="css/LoginCSS.css" rel="stylesheet" media="screen">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript">
+            function carregando(){
+                document.getElementById("box").innerHTML = "<h4>Por Favor Aguarde... Tentando autenticar no LDAP</h4><h4><img src=\"loading.gif\"></h4>";
+            }
+            
+        </script>
     </head>
     <body>
         <div id="box">
-            <form action="LoginManager" method="POST" class="form-horizontal" accept-charset="ISO-8859-1">
+            <form action="LoginManager" method="POST" class="form-horizontal" accept-charset="ISO-8859-1" onsubmit="carregando()">
                 <fieldset >
                     <c:if test="${erroLogin!=null}">
                         <h5 class="row">${erroLogin}</h5>
