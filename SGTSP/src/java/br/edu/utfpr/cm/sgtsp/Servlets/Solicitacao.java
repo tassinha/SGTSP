@@ -4,6 +4,9 @@
  */
 package br.edu.utfpr.cm.sgtsp.Servlets;
 
+import br.edu.utfpr.cm.sgtsp.hibernate.DaoGenerico;
+import br.edu.utfpr.sgtsp.beans.Aula;
+import br.edu.utfpr.sgtsp.beans.Disciplina;
 import br.edu.utfpr.sgtsp.beans.Professor;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +15,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Expression;
 
 /**
  *
@@ -83,8 +88,17 @@ public class Solicitacao extends HttpServlet {
         professor = (Professor) request.getAttribute("professor");
         
         String tipo = request.getParameter("radio");
+
+        DaoGenerico<Professor> p = new DaoGenerico<Professor>() {};
         
+        Criteria c = p.getCriteria();
+
+        c.add(Expression.eq("codigo", professor.getCoordenacao()));
+        c.add(Expression.eq("aula", new Aula().getDiciplina()));
         
+        for (Professor prof : p.listResult(c)) {
+            System.out.println("Professor: "+prof.toString());
+        }
     
     }
 
