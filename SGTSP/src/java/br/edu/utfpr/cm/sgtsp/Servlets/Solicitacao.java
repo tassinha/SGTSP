@@ -94,7 +94,6 @@ public class Solicitacao extends HttpServlet {
         Criteria c = p.getCriteria();
 
         c.add(Expression.eq("codigo", professor.getCoordenacao()));
-        c.add(Expression.eq("aula", new Aula().getDiciplina()));
         
         for (Professor prof : p.listResult(c)) {
             System.out.println("Professor: "+prof.toString());
