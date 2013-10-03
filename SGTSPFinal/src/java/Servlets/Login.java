@@ -45,15 +45,22 @@ public class Login extends HttpServlet {
             }
 
             Usuario usuarioLocal = ehOAdmin(login, senha);
-            Usuario usuarioLDAP = autenticarUsuario(login, senha);
+            Usuario usuarioLDAP = null;
+                    //autenticarUsuario(login, senha);
             if (usuarioLocal != null) {
                 Professor professor = (Professor) new Dao.DAO(conecta).selecionaEspecifico("SELECT p FROM Professor p WHERE p.login='" + login + "'");
                 request.getSession().setAttribute("ProfessorLogado", professor);
                 //request.getSession().setAttribute("UsuarioLogado", usuarioLocal);
-                System.out.println("Logado como Administrador do sistema");
-                List<Aula> aulas = new Dao.DAO(conecta).seleciona("SELECT a FROM Aula a WHERE a.professor.id=" + professor.getId() + " ORDER BY a.hora ASC");
-                request.getSession().setAttribute("aulas", aulas);
-                response.sendRedirect("site/upload.jsp");
+                if (verificarHorarioCadastrado(professor, request)) {
+                    request.getSession().setAttribute("mensagem", null);
+                    response.sendRedirect("site/upload.jsp");
+                } else {
+                    //session.setAttribute("UsuarioLogado", usuarioLocal);
+                    //System.out.println("Logado através da base do Sistema");
+                    request.getSession().setAttribute("mensagem", null);
+                    response.sendRedirect("site/principal.jsp");
+                }
+
                 //response.sendRedirect("index.jsp");
             } else {
                 if (!login.equals("admin")) {
@@ -64,6 +71,7 @@ public class Login extends HttpServlet {
                         if (usuarioLocal != null) {
                             Professor professor = (Professor) new Dao.DAO(conecta).selecionaEspecifico("SELECT p FROM Professor p WHERE p.login='" + login + "'");
                             session.setAttribute("ProfessorLogado", professor);
+                            request.getSession().setAttribute("mensagem", null);
                             if (verificarHorarioCadastrado(professor, request)) {
                                 response.sendRedirect("site/upload.jsp");
                             } else {
@@ -75,6 +83,7 @@ public class Login extends HttpServlet {
                             Professor professor = setProfessorNaBaseLocal(usuarioLDAP);
                             session.setAttribute("ProfessorLogado", professor);
                             session.setAttribute("UsuarioLogado", usuarioLDAP);
+                            request.getSession().setAttribute("mensagem", null);
                             System.out.println("Logado através do LDAP");
                             response.sendRedirect("site/upload.jsp");
                         }
@@ -177,7 +186,7 @@ public class Login extends HttpServlet {
         EntityManager conecta = Persistence.createEntityManagerFactory("SGTSPFinalPU").createEntityManager();
         if (usuario != null) {
             Professor professor = new Professor();
-            professor.setCoordenacao((Coordenacao) new Dao.DAO(conecta).selecionaEspecifico("SELECT c FROM Coordenacao c WHERE c.id="+1));
+            professor.setCoordenacao((Coordenacao) new Dao.DAO(conecta).selecionaEspecifico("SELECT c FROM Coordenacao c WHERE c.id=" + 1));
             professor.setEmail(usuario.getEmail());
             professor.setLogin(usuario.getLogin());
             professor.setNome(usuario.getNome());
