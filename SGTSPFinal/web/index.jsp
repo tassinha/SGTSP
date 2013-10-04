@@ -19,12 +19,18 @@
 
         <script type="text/javascript" src="<c:url value='http://code.jquery.com/jquery.js'/>"></script> 
         <script type="text/javascript" src="<c:url value='js/bootstrap.js'/>"></script> 
-        <script type="text/javascript" src="<c:url value='js/bootstrap.min.js'/>"></script> 
+        <script type="text/javascript" src="<c:url value='js/bootstrap.min.js'/>"></script>
+        <script type="text/javascript">
+            function carregando(){
+                document.getElementById("box").innerHTML = "<h4>Por Favor Aguarde... Tentando autenticar no LDAP</h4><h4><img src=\"img\loading.gif\"></h4>";
+            }
+            
+        </script>
 
     </head>
     <body>
         <div id="box">
-            <form action="Login" method="POST" class="form-horizontal" accept-charset="ISO-8859-1">
+            <form action="Login" method="POST" class="form-horizontal" accept-charset="ISO-8859-1" onsubmit="carregando()">
                 <fieldset >
                     <c:if test="${erroLogin!=null}">
                         <h5 class="row">${erroLogin}</h5>
