@@ -14,6 +14,13 @@
 <html lang="en">
     <head>
         <c:import url="head.jsp"/>
+        <link type="text/css" rel="stylesheet" href="<c:url value='/css/bootstrap-combined.min.css'/>"/>
+        
+        <script type="text/javascript" src="<c:url value='/js/funcoes.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/js/jquery.min.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/js/bootstrap.min.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/js/bootstrap-datetimepicker.min.js'/>"></script>
+        <script type="text/javascript" src="<c:url value='/js/bootstrap-datetimepicker.pt-BR.js'/>"></script>
     </head>
 
     <body>
@@ -30,6 +37,7 @@
                         <INPUT TYPE="radio" NAME="OPCAO" VALUE="troca"> Troca </br> 
                         <INPUT TYPE="radio" NAME="OPCAO" VALUE="substituicao"> Substituição </br>
                         <INPUT TYPE="radio" NAME="OPCAO" VALUE="todos"> Troca/Substiuição
+
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
@@ -60,8 +68,25 @@
                             <td>${aulas.getTurma().getCodigo()}</td>
                             <td>${aulas.getDiciplina().getCodigo()}</td>
                             <td>${aulas.getDiciplina().getNome()}</td>
-                            <td><a data-toggle="modal" href="#myModal" onclick="<c:set var="horario" value="${aulas.getHora()}" scope="session"/>;">${aulas.getHora()}</a></td>
+                            <td><a data-toggle="modal" href="#myModal${aulas.id}" onclick="setHorario(${aulas.getHora()});"/>${aulas.getHora()}</a></td>
                         </tr>
+                        <div style="width: 300px;" id="myModal${aulas.id}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <form action="Solicitacao" method="post">
+                                <div style="padding: 50px 30px 30px 30px"> 
+                                    <script>
+                                        document.getElementById("horario").onclick;
+                                    </script>
+                                    <INPUT TYPE="radio" NAME="OPCAO" VALUE="troca"> Troca </br> 
+                                    <INPUT TYPE="radio" NAME="OPCAO" VALUE="substituicao"> Substituição </br>
+                                    <INPUT TYPE="radio" NAME="OPCAO" VALUE="todos"> Troca/Substiuição
+                                    <input type="hidden" name="horario" value="${aulas.getHora()}"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                                    <button  type="submit" class="btn btn-primary">Solicitar</button>
+                                </div>
+                            </form>
+                        </div>
                     </c:forEach> 
                 </table>   
                 <div>
@@ -122,18 +147,6 @@
         <script src="js/bootstrap-carousel.js"></script>
         <script src="js/bootstrap-typeahead.js"></script>
         <script src="js/bootstrap-datetimepicker.min.js"></script>
-        <script type="text/javascript"
-                src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-        </script> 
-        <script type="text/javascript"
-                src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
-        </script>
-        <script type="text/javascript"
-                src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-        </script>
-        <script type="text/javascript"
-                src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
-        </script>
         <script type="text/javascript">
             $('#datetimepicker').datetimepicker({
                 format: 'dd/MM/yyyy hh:mm:ss',

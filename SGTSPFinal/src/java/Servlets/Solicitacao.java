@@ -32,6 +32,8 @@ public class Solicitacao extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String solicitacao = request.getParameter("OPCAO");
+        String horario = request.getParameter("horario");
+        request.getSession().setAttribute("horario", horario);
 
         if (solicitacao == null) {
             request.getSession().setAttribute("mensagem", "Nenhuma opção foi selecionada!");
