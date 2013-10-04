@@ -5,9 +5,16 @@
 package Servlets;
 
 import Entidades.Professor;
+import EnviarEmail.MailTester;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
@@ -25,7 +32,7 @@ public class Substituicao extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, UnsupportedEncodingException {
         EntityManager conecta = Persistence.createEntityManagerFactory("SGTSPFinalPU").createEntityManager();
         String horario = (String) request.getSession().getAttribute("horario");
         Professor professor = (Professor) request.getSession().getAttribute("ProfessorLogado");
@@ -41,36 +48,42 @@ public class Substituicao extends HttpServlet {
             hora3 = horario.substring(8, 11);
             hora4 = horario.substring(0, 7);
             hora5 = horario.substring(4, 11);
-            ids = new Dao.DAO(conecta).seleciona("SELECT DISTINCT a.professor.id FROM Aula a WHERE a.hora = '" + horario + "' OR a.hora = '" + hora1 + "' OR a.hora = '" + hora2 + "' OR a.hora = '" + hora3 + "' OR a.hora = '" + hora4 + "' OR a.hora = '" + hora5 + "' OR a.professor.id ="+professor.getId());
+            ids = new Dao.DAO(conecta).seleciona("SELECT DISTINCT a.professor.id FROM Aula a WHERE a.hora = '" + horario + "' OR a.hora = '" + hora1 + "' OR a.hora = '" + hora2 + "' OR a.hora = '" + hora3 + "' OR a.hora = '" + hora4 + "' OR a.hora = '" + hora5 + "' OR a.professor.id =" + professor.getId());
         } else if (horario.length() == 7) {
             hora1 = horario.substring(0, 3);
             hora2 = horario.substring(4, 7);
-            ids = new Dao.DAO(conecta).seleciona("SELECT DISTINCT a.professor.id FROM Aula a WHERE a.hora = '" + horario + "' OR a.hora = '" + hora1 + "' OR a.hora = '" + hora2 + "' OR a.id ="+professor.getId());
+            ids = new Dao.DAO(conecta).seleciona("SELECT DISTINCT a.professor.id FROM Aula a WHERE a.hora = '" + horario + "' OR a.hora = '" + hora1 + "' OR a.hora = '" + hora2 + "' OR a.id =" + professor.getId());
         } else {
-            ids = new Dao.DAO(conecta).seleciona("SELECT DISTINCT a.professor.id FROM Aula a WHERE a.hora = '" + horario + "' OR a.id ="+professor.getId());
+            ids = new Dao.DAO(conecta).seleciona("SELECT DISTINCT a.professor.id FROM Aula a WHERE a.hora = '" + horario + "' OR a.id =" + professor.getId());
 
         }
 
-        
+
         List<String> vetor = new Dao.DAO(conecta).seleciona("SELECT p.email FROM Professor p");
         List<String> email = new ArrayList<String>();
-        
+
         for (Long long1 : ids) {
-            email.add((String) new Dao.DAO(conecta).selecionaEspecifico("SELECT p.email FROM Professor p WHERE p.id="+long1));
+            email.add((String) new Dao.DAO(conecta).selecionaEspecifico("SELECT p.email FROM Professor p WHERE p.id=" + long1));
         }
-        
-        for(int i = 0; i < email.size();i++){
-            for(int j = 0; j < vetor.size();j++){
-                if(email.get(i).equals(vetor.get(j))){
+
+        for (int i = 0; i < email.size(); i++) {
+            for (int j = 0; j < vetor.size(); j++) {
+                if (email.get(i).equals(vetor.get(j))) {
                     vetor.remove(j);
                 }
             }
         }
-        
+
+        Map<String, String> map = new HashMap<String, String>();
         for (String string : vetor) {
-            System.out.println(string);
+            map.put(string, "");
         }
-        
+        try {
+            MailTester.enviarEmail(map,"Substituicção de aula solicitada pelo professor "+professor.getNome(), "Substituição de aula");
+        } catch (MessagingException ex) {
+            Logger.getLogger(Substituicao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         //List<Long> ids = new Dao.DAO(conecta).seleciona("SELECT DISTINCT a.professor.id FROM Aula a WHERE a.hora = '"+ horario +"'");
         request.getSession().setAttribute("mensagem", null);
         response.sendRedirect("principal.jsp");

@@ -4,11 +4,20 @@
  */
 package Servlets;
 
+import Entidades.Aula;
 import Entidades.Professor;
+import EnviarEmail.MailTester;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
@@ -26,7 +35,7 @@ public class Troca extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, UnsupportedEncodingException {
 
         EntityManager conecta = Persistence.createEntityManagerFactory("SGTSPFinalPU").createEntityManager();
         String horario = (String) request.getSession().getAttribute("horario");
@@ -53,15 +62,54 @@ public class Troca extends HttpServlet {
 
         }
         List<String> email = new ArrayList<String>();
+        List<Aula> aulas = new Dao.DAO(conecta).seleciona("SELECT a FROM Aula a");
+        List<String> emailok = new ArrayList<String>();
 
-        for (Long long1 : ids) {
-            if (long1 == professor.getId()) {
-                email.add((String) new Dao.DAO(conecta).selecionaEspecifico("SELECT p.email FROM Professor p WHERE p.id=" + long1));
+        if (horario.length() == 11) {
+            for (Aula aula : aulas) {
+                if (aula.getHora().length() == 11) {
+                    emailok.add(aula.getProfessor().getEmail());
+                }
+            }
+        } else if (horario.length() == 7) {
+            for (Aula aula : aulas) {
+                if (aula.getHora().length() == 7) {
+                    emailok.add(aula.getProfessor().getEmail());
+                }
+            }
+        }else{
+            for (Aula aula : aulas) {
+                if (aula.getHora().length() == 3) {
+                    emailok.add(aula.getProfessor().getEmail());
+                }
             }
         }
 
-        for (String string : email) {
+        List<String> novaLista = new ArrayList(new HashSet(emailok)); 
+
+        for (Long long1 : ids) {
+
+            email.add((String) new Dao.DAO(conecta).selecionaEspecifico("SELECT p.email FROM Professor p WHERE p.id=" + long1));
+
+        }
+
+        for (int i = 0; i < email.size(); i++) {
+            for (int j = 0; j < novaLista.size(); j++) {
+                if (email.get(i).equals(novaLista.get(j))) {
+                    novaLista.remove(j);
+                }
+            }
+        }
+
+        Map<String, String> map = new HashMap<String, String>();
+        for (String string : novaLista) {
+            map.put(string, "");
             System.out.println(string);
+        }
+        try {
+            MailTester.enviarEmail(map, "Troca de aula solicitada pelo professor "+professor.getNome(), "Troca de Aula");
+        } catch (MessagingException ex) {
+            Logger.getLogger(Troca.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         response.sendRedirect("principal.jsp");
