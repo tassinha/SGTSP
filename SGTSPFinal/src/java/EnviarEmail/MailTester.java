@@ -19,9 +19,9 @@ public class MailTester {
         mj.setSmtpPortMail("587");
         mj.setSmtpAuth("true");
         mj.setSmtpStarttls("true");
-        mj.setUserMail("gefurtuoso@gmail.com");
+        mj.setUserMail("sgtsputfpr@gmail.com");
         mj.setFromNameMail("SGTSP");
-        mj.setPassMail("sucodelaranjacomlimao");
+        mj.setPassMail("sgtsputfpr123");
         mj.setCharsetMail("ISO-8859-1");
         mj.setSubjectMail(tipo);
         mj.setBodyMail(mensagem);
